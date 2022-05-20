@@ -2,12 +2,12 @@ const { body, validationResult } = require('express-validator');
 
 module.exports = {
     registerValidator: [
-        body('name')
+        body('firstName')
             .exists().trim().notEmpty().withMessage('Name is required')
             .isLength({min:4}).withMessage('Name must contain at least 4 characters')
             .isAlpha().withMessage('Name must contains only letters'),
 
-        body('surname')
+        body('lastName')
             .exists().trim().notEmpty().withMessage('Surname is required')
             .isAlpha().withMessage('Surname must contains only letters')
             .isLength({min:4}).withMessage('Surname must contain at least 4 characters'),
