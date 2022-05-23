@@ -18,7 +18,11 @@ module.exports = {
                 
                 if(match){
                     const token = await generateJWT(dbUser);
-                    res.status(200).json(token);
+                    res.status(200).json(
+                        {
+                        token:token,
+                        ok: true
+                        });
                 }else{
                     throw new Error()
                 }
@@ -28,7 +32,12 @@ module.exports = {
             }
 
         } catch (error) {
-            res.status(401).json("Invalid email or password. Please, try again.")
+            res.status(401).json(
+                {
+                    message:"Invalid email or password. Please, try again.",
+                    ok: false
+                }
+                )
         }
     },
     signUp: async(req, res) => {
