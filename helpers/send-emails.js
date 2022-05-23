@@ -2,7 +2,7 @@ const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const emailPlaceholder = "meyav61726@cupbest.com";
+const emailPlaceholder = "sergiorive02@gmail.com";
 
 const sendContactEmail = (email = "") => {
   const message = {
