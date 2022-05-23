@@ -20,7 +20,7 @@ module.exports = {
                     const token = await generateJWT(dbUser);
                     res.status(200).json(
                         {
-                        token:token,
+                        results:token,
                         ok: true
                         });
                 }else{
@@ -34,7 +34,7 @@ module.exports = {
         } catch (error) {
             res.status(401).json(
                 {
-                    message:"Invalid email or password. Please, try again.",
+                    msg:"Invalid email or password. Please, try again.",
                     ok: false
                 }
                 )
@@ -94,7 +94,8 @@ module.exports = {
         await generateJWT({newUser});
 
         res.json({
-            newUser
+            results: newUser,
+            ok: true
         })
     }
 }
