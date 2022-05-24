@@ -20,8 +20,8 @@ module.exports = {
                     const token = await generateJWT(dbUser);
                     res.status(200).json(
                         {
-                        results:token,
-                        ok: true
+                            results:{token: token},
+                            ok: true
                         });
                 }else{
                     throw new Error()
@@ -91,10 +91,12 @@ module.exports = {
             roleId
         })
 
-        await generateJWT({newUser});
+        /* 
+        Error when I try generate JWT with newUser
+        const token = await generateJWT(newUser); */
 
-        res.json({
-            results: newUser,
+        res.status(200).json({
+            msg: "User created succesfully",
             ok: true 
         })
     }

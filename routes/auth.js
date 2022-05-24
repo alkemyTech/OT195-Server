@@ -4,7 +4,7 @@ const {logIn, signUp } = require("../controllers/auth");
 const {loginValidator, registerValidator, checkValidator} = require("../middlewares/userValidate");
 
 router.post('/login', loginValidator, checkValidator, logIn);
-router.post('/register', registerValidator, checkValidator, signUp)
+router.post('/register', registerValidator, checkValidator, signUp);
 
 router.get("/me", async (req, res) => {
     // Get user access token from headers
