@@ -95,7 +95,7 @@ module.exports = {
 
         res.json({
             results: newUser,
-            ok: true
+            ok: true 
         })
     }
 }
