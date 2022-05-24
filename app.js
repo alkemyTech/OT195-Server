@@ -9,8 +9,7 @@ require('dotenv').config()
 // Routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
-const authRouter = require('./routes/auth');
+const authRouter = require("./routes/auth");
 
 const organizationsRouter = require('./routes/organizations');
 
@@ -33,7 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 app.use('/auth', authRouter);
 app.use("/organizations", organizationsRouter)
 

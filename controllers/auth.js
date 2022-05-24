@@ -1,9 +1,45 @@
 const { generateJWT } = require('../helpers/generate-JWT');
-const { encryptPassword } = require('../helpers/bcrypt');
+const {comparePassword, encryptPassword} = require('../helpers/bcrypt');
 const { User, Role } = require('../models');
 require('dotenv').config();
 
+
 module.exports = {
+    logIn: async(req, res)=> {
+        const {email, password} = req.body;
+    
+        const dbUser = await User.findOne({
+            where:{email: email}
+        })
+    
+        try {
+            if(dbUser){
+                const match =  await comparePassword(password, dbUser.password)
+                
+                if(match){
+                    const token = await generateJWT(dbUser);
+                    res.status(200).json(
+                        {
+                            results:{token: token},
+                            ok: true
+                        });
+                }else{
+                    throw new Error()
+                }
+                
+            }else{
+                throw new Error()
+            }
+
+        } catch (error) {
+            res.status(401).json(
+                {
+                    msg:"Invalid email or password. Please, try again.",
+                    ok: false
+                }
+                )
+        }
+    },
     signUp: async(req, res) => {
 
         let {firstName, lastName, email, password, roleId} = req.body;
@@ -55,10 +91,13 @@ module.exports = {
             roleId
         })
 
-        await generateJWT({newUser});
+        /* 
+        Error when I try generate JWT with newUser
+        const token = await generateJWT(newUser); */
 
-        res.json({
-            newUser
+        res.status(200).json({
+            msg: "User created succesfully",
+            ok: true 
         })
     }
 }

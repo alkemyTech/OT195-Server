@@ -1,6 +1,14 @@
 const { body, validationResult } = require('express-validator');
 
 module.exports = {
+    loginValidator: [
+        body('email')
+            .exists().trim().notEmpty().withMessage('Email is required')
+            .isEmail().withMessage('Invalid email'),
+
+        body('password')
+            .exists().trim().notEmpty().withMessage('Password is required')],
+    
     registerValidator: [
         body('firstName')
             .exists().trim().notEmpty().withMessage('Name is required')

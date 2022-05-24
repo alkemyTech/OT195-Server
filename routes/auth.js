@@ -1,18 +1,10 @@
-var express = require("express");
-var router = express.Router();
-const {
-    authenticateToken
-} = require("../helpers/authenticate-JWT")
+const express = require('express');
+const router = express.Router();
+const {logIn, signUp } = require("../controllers/auth");
+const {loginValidator, registerValidator, checkValidator} = require("../middlewares/userValidate");
 
-const {
-    signUp
-} = require("../controllers/auth");
-const {
-    registerValidator,
-    checkValidator,
-} = require("../middlewares/userValidate");
-
-router.post("/register", registerValidator, checkValidator, signUp);
+router.post('/login', loginValidator, checkValidator, logIn);
+router.post('/register', registerValidator, checkValidator, signUp);
 
 router.get("/me", async (req, res) => {
     // Get user access token from headers
