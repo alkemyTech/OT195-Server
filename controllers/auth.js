@@ -24,17 +24,17 @@ module.exports = {
                             ok: true
                         });
                 }else{
-                    throw new Error()
+                    throw new Error("fail match")
                 }
                 
             }else{
-                throw new Error()
+                throw new Error("fail dbUser")
             }
 
         } catch (error) {
             res.status(401).json(
                 {
-                    msg:"Invalid email or password. Please, try again.",
+                    msg:error.message,
                     ok: false
                 }
                 )

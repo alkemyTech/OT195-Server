@@ -9,7 +9,8 @@ router.get('/1/public', function (req, res, next) {
     image: "/images/logo.png",
     phone: "",
     address: "",
-    welcomeText: "Hola! Bienvenidx",
+    welcomeTitle: "Hola! Bienvenidx",
+    welcomeText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing dignissim ac et eleifend lacus, rhoncus, dignissim sagittis. Tellus ac a, elementum ut. Tellus a morbi tincidunt ultricies malesuada eget turpis. Lacus enim non enim, velit hac turpis interdum arcu. Suspendisse at vel ultrices amet orci enim lectus porttitor ut.",
     news: [
       {
         image: '/images/latest-01.jpg',
@@ -38,7 +39,7 @@ router.get('/1/public', function (req, res, next) {
       },
     ]
   };
-  res.status(200).json(data);
+  res.status(200).json({results:data, ok:true});
 });
 
 
