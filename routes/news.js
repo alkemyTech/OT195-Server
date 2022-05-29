@@ -2,8 +2,10 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 // controllers
-const { getNewsDetails } = require("../controllers/news");
+const { getNewsDetails, getNewsList } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
+const { validateJWT } = require('../middlewares/validate-JWT')
+const { adminValidate } = require('../middlewares/adminValidate')
 
 const router = Router();
 
@@ -19,5 +21,8 @@ router.get(
   ],
   getNewsDetails
 );
+
+// GET News list
+router.get('/', validateJWT, adminValidate, getNewsList);
 
 module.exports = router;
