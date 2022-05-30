@@ -28,18 +28,19 @@ const getNewsDetails = async (req, res) => {
   }
 };
 
-const getNewsList = async(req, res) => {
+
+const createNews = async (req, res) => {
   try {
-    const entries = await Entry.findAll({
-      attributes: ['name', 'image', 'createdAt']
-    });
-    res.status(200).json({entries, ok: true});
-  } catch (error) {
-    res.status(400).json({msg:error.message, ok: false});
+    const entry = await Entry.create({ ...req.body, type: "1" });
+    return res.status(201).json({ msg: "News created succesfully", ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Internal Server Error.", ok: false });
   }
-}
+};
 
 module.exports = {
   getNewsDetails,
-  getNewsList
+  createNews,
+
 };
