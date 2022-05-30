@@ -1,13 +1,14 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-// Controllers
-const { getNewsDetails, createNews } = require("../controllers/news");
 
-// Middleware
+// controllers
+const { getNewsDetails } = require("../controllers/news");
+
+// middlewares
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require("../middlewares/validate-JWT");
-const { adminValidate } = require("../middlewares/adminValidate");
+
 
 const router = Router();
 
@@ -15,11 +16,12 @@ const router = Router();
 router.get(
   "/:id",
   [
-    checkValidator,
+    validateJWT,
     check("id", `The field 'id' is required on the request params.`)
       .notEmpty()
       .isInt()
       .withMessage(`The field 'id' must be a number.`),
+    checkValidator,
   ],
   getNewsDetails
 );
