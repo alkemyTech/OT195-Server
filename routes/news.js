@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
+
 // controllers
 const { getNewsDetails } = require("../controllers/news");
 
@@ -8,9 +9,10 @@ const { getNewsDetails } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require("../middlewares/validate-JWT");
 
+
 const router = Router();
 
-// GET News details
+// GET news details
 router.get(
   "/:id",
   [
@@ -22,6 +24,33 @@ router.get(
     checkValidator,
   ],
   getNewsDetails
+);
+
+// POST news
+router.post(
+  "/",
+  validateJWT,
+  adminValidate,
+  [
+    check(
+      "name",
+      `The field 'name' is required on the request params.`
+    ).exists(),
+    check(
+      "content",
+      `The field 'content' is required on the request params.`
+    ).exists(),
+    check(
+      "image",
+      `The field 'image' is required on the request params.`
+    ).exists(),
+    check(
+      "categoryId",
+      `The field 'categoryId' is required on the request params.`
+    ).exists(),
+    checkValidator,
+  ],
+  createNews
 );
 
 module.exports = router;
