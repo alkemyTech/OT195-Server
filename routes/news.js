@@ -3,11 +3,11 @@ const { check } = require("express-validator");
 
 
 // controllers
-const { getNewsDetails } = require("../controllers/news");
 
-// middlewares
+const { getNewsDetails, getNewsList } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
-const { validateJWT } = require("../middlewares/validate-JWT");
+const { validateJWT } = require('../middlewares/validate-JWT')
+const { adminValidate } = require('../middlewares/adminValidate')
 
 
 const router = Router();
@@ -25,6 +25,7 @@ router.get(
   ],
   getNewsDetails
 );
+
 
 // POST news
 router.post(
@@ -52,5 +53,6 @@ router.post(
   ],
   createNews
 );
+
 
 module.exports = router;

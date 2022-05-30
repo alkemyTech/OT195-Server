@@ -28,6 +28,7 @@ const getNewsDetails = async (req, res) => {
   }
 };
 
+
 const createNews = async (req, res) => {
   try {
     const entry = await Entry.create({ ...req.body, type: "1" });
@@ -41,4 +42,5 @@ const createNews = async (req, res) => {
 module.exports = {
   getNewsDetails,
   createNews,
+
 };
