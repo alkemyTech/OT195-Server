@@ -28,6 +28,17 @@ const getNewsDetails = async (req, res) => {
   }
 };
 
+const createNews = async (req, res) => {
+  try {
+    const entry = await Entry.create({ ...req.body, type: "1" });
+    return res.status(201).json({ msg: "News created succesfully", ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Internal Server Error.", ok: false });
+  }
+};
+
 module.exports = {
   getNewsDetails,
+  createNews,
 };
