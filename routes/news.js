@@ -13,6 +13,7 @@ const { adminValidate } = require('../middlewares/adminValidate')
 const router = Router();
 
 // GET news details
+
 router.get(
   "/:id",
   [
@@ -26,6 +27,8 @@ router.get(
   getNewsDetails
 );
 
+// GET news list
+router.get('/', validateJWT, adminValidate, getNewsList)
 
 // POST news
 router.post(
