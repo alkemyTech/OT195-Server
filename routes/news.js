@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 
 // controllers
 
-const { getNewsDetails, getNewsList } = require("../controllers/news");
+const { getNewsDetails, createNews, getNewsList } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require('../middlewares/validate-JWT')
 const { adminValidate } = require('../middlewares/adminValidate')
@@ -26,6 +26,8 @@ router.get(
   getNewsDetails
 );
 
+// GET news list
+router.get('/', validateJWT, adminValidate, getNewsList)
 
 // POST news
 router.post(
