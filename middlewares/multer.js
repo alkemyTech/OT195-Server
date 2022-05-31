@@ -13,8 +13,10 @@ const storage = multer.diskStorage({
     }
 });
 
+// Before using this middleware, use adminValidate
 // To upload an image, use upload.single('image-field-name')
 // To save in database use req.file.filename property for image field
+// If image can't be saved in database, use unlink(req.file.path) method of fs-extra module to delete it from upload folder
 
 const upload = multer({storage});
 
