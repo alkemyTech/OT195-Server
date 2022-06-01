@@ -38,11 +38,12 @@ const createNews = async (req, res) => {
 };
 
 const getNewsList = async(req, res) => {
+  
   try {
-    const entries = await Entry.findAll({
-      attributes: ['name', 'image', 'createdAt']
+    const results = await Entry.findAll({
+      attributes: ['id', 'name', 'image', 'content', 'createdAt']
     });
-    res.status(200).json({entries, ok: true});
+    res.status(200).json({results, ok: true});
   } catch (error) {
     res.status(400).json({msg:error.message, ok: false});
   }
