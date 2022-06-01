@@ -14,7 +14,7 @@ const router = Router();
 
 // GET news details
 
-router.get("/", getNewsList)
+router.get("/",validateJWT, adminValidate, getNewsList)
 
 router.get(
   "/:id",
