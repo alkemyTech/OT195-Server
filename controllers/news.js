@@ -5,7 +5,7 @@ const getNewsDetails = async (req, res) => {
 
   try {
     // Query
-    const entry = await Entry.findOne({
+    const { dataValues: entry } = await Entry.findOne({
       where: { id: id },
       include: { association: "category", attributes: ["id", "name"] },
     });
@@ -17,9 +17,7 @@ const getNewsDetails = async (req, res) => {
       return res.status(404).json({ msg: "Not Found.", ok: false });
 
     // desestructuring to return only the required fields
-    const {
-      dataValues: { deletedAt, ...details },
-    } = entry;
+    const { deletedAt, ...details } = entry;
 
     return res.json({ results: details, ok: true });
   } catch (err) {
@@ -40,11 +38,12 @@ const createNews = async (req, res) => {
 };
 
 const getNewsList = async(req, res) => {
+  
   try {
-    const entries = await Entry.findAll({
-      attributes: ['name', 'image', 'createdAt']
+    const results = await Entry.findAll({
+      attributes: ['id', 'name', 'image', 'content', 'createdAt']
     });
-    res.status(200).json({entries, ok: true});
+    res.status(200).json({results, ok: true});
   } catch (error) {
     res.status(400).json({msg:error.message, ok: false});
   }

@@ -12,20 +12,25 @@ const { adminValidate } = require('../middlewares/adminValidate')
 
 const router = Router();
 
-// GET news details
+// GET news list
+router.get('/', getNewsList)
+
 
 router.get("/",validateJWT, adminValidate, getNewsList)
 
+
+// GET news details
+
 router.get(
   "/:id",
-  [
-    validateJWT,
-    check("id", `The field 'id' is required on the request params.`)
-      .notEmpty()
-      .isInt()
-      .withMessage(`The field 'id' must be a number.`),
-    checkValidator,
-  ],
+  // [
+  //   validateJWT,
+  //   check("id", `The field 'id' is required on the request params.`)
+  //     .notEmpty()
+  //     .isInt()
+  //     .withMessage(`The field 'id' must be a number.`),
+  //   checkValidator,
+  // ],
   getNewsDetails
 );
 
