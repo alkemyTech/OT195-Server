@@ -43,7 +43,7 @@ const deleteNew = async (req, res) => {
 
     return res
       .status(200)
-      .json({ results: { msg: "New deleted succesfully." }, ok: true });
+      .json({ results: { msg: "New deleted successfully." }, ok: true });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
