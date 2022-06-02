@@ -10,8 +10,8 @@ router.get('/1/public', function (req, res, next) {
     phone: "1160112988",
     address: "",
     email: "somosfundacionmas@gmail.com",
-    instagramURL: "https://www.instagram.com/",
-    facebookURL: "https://www.facebook.com/",
+    instagramURL: "www.instagram.com/alkemy__/",
+    facebookURL: "www.facebook.com/AlkemyLATAM/",
     welcomeTitle: "Hola! Bienvenidx",
     welcomeText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing dignissim ac et eleifend lacus, rhoncus, dignissim sagittis. Tellus ac a, elementum ut. Tellus a morbi tincidunt ultricies malesuada eget turpis. Lacus enim non enim, velit hac turpis interdum arcu. Suspendisse at vel ultrices amet orci enim lectus porttitor ut.",
     news: [{
