@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 
 // controllers
 
-const { getNewsDetails, getNewsList, createNews } = require("../controllers/news");
+const { getNewsDetails, getNewsList, createNews , modifyNews } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require('../middlewares/validate-JWT')
 const { adminValidate } = require('../middlewares/adminValidate')
@@ -12,23 +12,24 @@ const { adminValidate } = require('../middlewares/adminValidate')
 
 const router = Router();
 
+// GET news list
+router.get('/', getNewsList)
+
 // GET news details
 
 router.get(
   "/:id",
-  [
-    validateJWT,
-    check("id", `The field 'id' is required on the request params.`)
-      .notEmpty()
-      .isInt()
-      .withMessage(`The field 'id' must be a number.`),
-    checkValidator,
-  ],
+  // [
+  //   validateJWT,
+  //   check("id", `The field 'id' is required on the request params.`)
+  //     .notEmpty()
+  //     .isInt()
+  //     .withMessage(`The field 'id' must be a number.`),
+  //   checkValidator,
+  // ],
   getNewsDetails
 );
 
-// GET news list
-router.get('/', validateJWT, adminValidate, getNewsList)
 
 // POST news
 router.post(
@@ -56,6 +57,8 @@ router.post(
   ],
   createNews
 );
+
+router.put("/modify/:id" ,validateJWT, adminValidate, modifyNews);
 
 
 module.exports = router;
