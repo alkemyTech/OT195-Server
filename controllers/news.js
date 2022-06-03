@@ -115,9 +115,5 @@ module.exports = {
   createNews,
   getNewsList,
   modifyNews,
-<<<<<<< HEAD
   deleteNew,
-=======
->>>>>>> dev
 };
-
