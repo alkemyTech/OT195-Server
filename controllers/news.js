@@ -26,11 +26,46 @@ const getNewsDetails = async (req, res) => {
   }
 };
 
+const deleteNew = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    console.log(id);
+    const entry = await Entry.findOne({ where: { id } });
+
+    if (!entry) return res.status(404).json({ msg: "Not found.", ok: false });
+
+    if (entry.deletedAt)
+      return res.status(404).json({ msg: "Not found.", ok: false });
+
+    // // This record will be soft deleted even though I'm using the destroy method thanks to the 'paranoid' parameter on the model definition
+    await entry.destroy();
+
+    return res
+      .status(200)
+      .json({ results: { msg: "New deleted successfully." }, ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Internal Server Error.", ok: false });
+  }
+};
 
 const createNews = async (req, res) => {
+  // Fields required only to avoid unhandled exceptions
+  const { name, content, image, categoryId } = req.body;
+  const newEntry = {
+    name,
+    content,
+    image,
+    categoryId,
+    type: "1",
+  };
+
   try {
-    const entry = await Entry.create({ ...req.body, type: "1" });
-    return res.status(201).json({ msg: "News created succesfully", ok: true });
+    await Entry.create(newEntry);
+    return res
+      .status(201)
+      .json({ results: { msg: "News created succesfully" }, ok: true });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
@@ -49,19 +84,15 @@ const getNewsList = async(req, res) => {
   }
 }
 
-const modifyNews = async(req , res , next ) =>{
-  try{
-    const {id} = req.params;
-    const {
-      name,
-      content,
-      image, 
-    } = req.body;
-    const allNews = await Entry.findAll()
-    // console.log(allNews)
-    const idNews = allNews.find(el => el.id.toString() === id.toLowerCase() );
-    if(idNews){
-      console.log(idNews)
+const modifyNews = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, content, image } = req.body;
+    const allNews = await Entry.findAll();
+
+    const idNews = allNews.find((el) => el.id.toString() === id.toLowerCase());
+
+    if (idNews) {
       idNews.name = name ? name : idNews.name;
       idNews.content = content ? content : idNews.content;
       idNews.image = image ? image : idNews.image;
@@ -80,6 +111,6 @@ module.exports = {
   getNewsDetails,
   createNews,
   getNewsList,
-  modifyNews
+  modifyNews,
+  deleteNew,
 };
-
