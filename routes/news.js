@@ -19,6 +19,7 @@ const router = Router();
 // GET news list
 router.get("/", getNewsList);
 
+
 // GET news details
 router.get(
   "/:id",
