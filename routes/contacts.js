@@ -1,6 +1,10 @@
 const router = require('express').Router();
+const { check } = require("express-validator");
+
 const { validateJWT } = require('../middlewares/validate-JWT');
 const { adminValidate } = require('../middlewares/adminValidate');
+const {createContact} = require ("../controllers/contacts")
+const { checkValidator } = require("../middlewares/userValidate");
 
 const { contact } = require('../models');
 
@@ -23,5 +27,21 @@ router.get('/', validateJWT, adminValidate, async(req, res) => {
     }
 })
 
+// POST contacts
+router.post(
+  "/",
+  [
+    check(
+      "name",
+      `The field 'name' is required on the request params.`
+    ).exists(),
+    check(
+      "email",
+      `The field 'email' is required on the request params.`
+    ).exists(),
+    checkValidator,
+  ],
+  createContact
+);
 
 module.exports = router;
