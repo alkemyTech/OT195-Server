@@ -12,7 +12,7 @@ const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const newsRouter = require("./routes/news");
 const contactsRouter = require("./routes/contacts");
-
+const activitiesRouter = require("./routes/activities");
 const organizationsRouter = require("./routes/organizations");
 
 const app = express();
@@ -39,6 +39,7 @@ app.use("/auth", authRouter);
 app.use("/news", newsRouter);
 app.use("/organizations", organizationsRouter);
 app.use("/contacts", contactsRouter);
+app.use("/activities", activitiesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
