@@ -26,7 +26,6 @@ const getNewsDetails = async (req, res) => {
   }
 };
 
-
 const createNews = async (req, res) => {
   try {
     const entry = await Entry.create({ ...req.body, type: "1" });
@@ -37,49 +36,48 @@ const createNews = async (req, res) => {
   }
 };
 
-const getNewsList = async(req, res) => {
-  
+const getNewsList = async (req, res) => {
   try {
     const results = await Entry.findAll({
-      attributes: ['id', 'name', 'image', 'content', 'createdAt']
+      attributes: ["id", "name", "image", "content", "createdAt"],
+      where: { deletedAt: null },
     });
-    res.status(200).json({results, ok: true});
-  } catch (error) {
-    res.status(400).json({msg:error.message, ok: false});
-  }
-}
 
-const modifyNews = async(req , res , next ) =>{
-  try{
-    const {id} = req.params;
-    const {
-      name,
-      content,
-      image, 
-    } = req.body;
-    const allNews = await Entry.findAll()
+    if (!results) return res.status(404).json({ msg: "Not Found.", ok: false });
+
+    res.status(200).json({ results, ok: true });
+  } catch (error) {
+    res.status(400).json({ msg: error.message, ok: false });
+  }
+};
+
+const modifyNews = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, content, image } = req.body;
+    const allNews = await Entry.findAll();
     // console.log(allNews)
-    const idNews = allNews.find(el => el.id.toString() === id.toLowerCase() );
-    if(idNews){
-      console.log(idNews)
+    const idNews = allNews.find((el) => el.id.toString() === id.toLowerCase());
+    if (idNews) {
+      console.log(idNews);
       idNews.name = name ? name : idNews.name;
       idNews.content = content ? content : idNews.content;
       idNews.image = image ? image : idNews.image;
-      idNews.save(); 
+      idNews.save();
       return res.status(200).send(idNews);
     }
-    return res.status(404).json({error:"no se encuntra ese id" });
-  }catch(error){
+    return res.status(404).json({ error: "no se encuntra ese id" });
+  } catch (error) {
     console.log(error);
     next(error);
-    return res.status(500).json({ msg:"internal server error" , ok:false } )
+    return res.status(500).json({ msg: "internal server error", ok: false });
   }
-}
+};
 
 module.exports = {
   getNewsDetails,
   createNews,
   getNewsList,
-  modifyNews
+  modifyNews,
 };
 
