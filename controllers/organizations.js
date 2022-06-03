@@ -1,4 +1,4 @@
-const { Public } = require("../models");
+const { Public, Social } = require("../models");
 
 const getPublic = async(req, res, next) => {
 
@@ -7,6 +7,8 @@ const getPublic = async(req, res, next) => {
       id: 1
     }
   });
+
+  const socialMedia = await Social.findAll();
 
   // Public data
   const results = {
@@ -17,6 +19,7 @@ const getPublic = async(req, res, next) => {
     email,
     welcomeTitle,
     welcomeText,
+    socialMedia,
     nav: {
       items: [
         {
