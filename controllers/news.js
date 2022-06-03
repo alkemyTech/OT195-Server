@@ -76,7 +76,11 @@ const getNewsList = async (req, res) => {
   try {
     const results = await Entry.findAll({
       attributes: ["id", "name", "image", "content", "createdAt"],
+      where: { deletedAt: null },
     });
+
+    if (!results) return res.status(404).json({ msg: "Not Found.", ok: false });
+
     res.status(200).json({ results, ok: true });
   } catch (error) {
     res.status(400).json({ msg: error.message, ok: false });
@@ -111,5 +115,9 @@ module.exports = {
   createNews,
   getNewsList,
   modifyNews,
+<<<<<<< HEAD
   deleteNew,
+=======
+>>>>>>> dev
 };
+
