@@ -15,10 +15,6 @@ const router = Router();
 // GET news list
 router.get('/', getNewsList)
 
-
-router.get("/",validateJWT, adminValidate, getNewsList)
-
-
 // GET news details
 
 router.get(

@@ -21,3 +21,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 module.exports = { upload };
+
+/* npx sequelize-cli model:generate --name contact --attributes name:string,phone:string,email:string,message:string,deletedAt:date
+
+
+ */
