@@ -4,6 +4,8 @@ const { check } = require("express-validator");
 // controllers
 const {createContact} = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
+const { validateJWT } = require('../middlewares/validate-JWT')
+const { adminValidate } = require('../middlewares/adminValidate')
 
 const router = Router();
 
