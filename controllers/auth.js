@@ -114,11 +114,10 @@ module.exports = {
       roleId,
     });
 
-    /* 
-        Error when I try generate JWT with newUser
-        const token = await generateJWT(newUser); */
+    const token = await generateJWT(newUser);
 
     res.status(200).json({
+      token,
       msg: "User created succesfully",
       ok: true,
     });
