@@ -4,10 +4,9 @@ const { check } = require("express-validator");
 // controllers
 const { createContact, listContacts } = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
+const { adminValidate } = require("../middlewares/adminValidate");
 
 const router = Router();
-
-const { Contact } = require('../models');
 
 router.get('/', validateJWT, adminValidate, listContacts)
 
