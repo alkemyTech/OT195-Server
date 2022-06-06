@@ -27,6 +27,27 @@ router.get('/', validateJWT, adminValidate, async(req, res) => {
     }
 })
 
+const { Contact } = require('../models');
+
+router.get('/', validateJWT, adminValidate, async(req, res) => {
+    try {
+        const results = await Contact.findAll({
+            where: {
+                deletedAt: null
+            }
+        });
+        res.json({
+            results,
+            ok: true
+        })
+    } catch (error) {
+        res.json({
+            msg: error.message,
+            ok: false
+        })
+    }
+})
+
 // POST contacts
 router.post(
   "/",
