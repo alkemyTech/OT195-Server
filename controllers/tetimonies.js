@@ -46,6 +46,7 @@ const modifyTestimony = async(req , res , next) =>{
             idTestimony.name = name ? name : idTestimony.name;
             idTestimony.content = content ? content : idTestimony.content;
             idTestimony.image = image ? image : idTestimony.image;
+            idTestimony.save();
             return res.status(200).send(idTestimony);
         }
         return res.status(404).json({ error: "no se encuntra ese id" });
