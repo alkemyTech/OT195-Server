@@ -37,8 +37,11 @@ const modifyTestimony = async(req , res , next) =>{
         if(req.file){
             image = req.file.filename
         }
-        const allTestimonies = await Testimony.findAll()
-        const idTestimony = allTestimonies.find(el => el.id.toString() === id);
+        // const allTestimonies = await Testimony.findAll()
+        // const idTestimony = allTestimonies.find(el => el.id.toString() === id);
+        const idTestimony = await Testimony.findOne({
+            where:{id}
+        });
         if(idTestimony){
             idTestimony.name = name ? name : idTestimony.name;
             idTestimony.content = content ? content : idTestimony.content;
