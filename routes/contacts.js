@@ -1,13 +1,33 @@
-const { Router } = require("express");
+const router = require('express').Router();
 const { check } = require("express-validator");
 
-// controllers
+const { validateJWT } = require('../middlewares/validate-JWT');
+const { adminValidate } = require('../middlewares/adminValidate');
 const {createContact} = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require('../middlewares/validate-JWT')
 const { adminValidate } = require('../middlewares/adminValidate')
 
-const router = Router();
+const { contact } = require('../models');
+
+router.get('/', validateJWT, adminValidate, async(req, res) => {
+    try {
+        const results = await contact.findAll({
+            where: {
+                deletedAt: null
+            }
+        });
+        res.json({
+            results,
+            ok: true
+        })
+    } catch (error) {
+        res.json({
+            msg: error.message,
+            ok: false
+        })
+    }
+})
 
 const { Contact } = require('../models');
 
