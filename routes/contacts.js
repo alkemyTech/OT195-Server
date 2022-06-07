@@ -2,11 +2,9 @@ const router = require('express').Router();
 const { check } = require("express-validator");
 
 const { validateJWT } = require('../middlewares/validate-JWT');
-const { adminValidate } = require('../middlewares/adminValidate');
-const {createContact} = require ("../controllers/contacts")
+const { createContact, listContacts } = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
-const { validateJWT } = require('../middlewares/validate-JWT')
-const { adminValidate } = require('../middlewares/adminValidate')
+const { adminValidate } = require("../middlewares/adminValidate");
 
 const { contact } = require('../models');
 
@@ -29,26 +27,7 @@ router.get('/', validateJWT, adminValidate, async(req, res) => {
     }
 })
 
-const { Contact } = require('../models');
-
-router.get('/', validateJWT, adminValidate, async(req, res) => {
-    try {
-        const results = await Contact.findAll({
-            where: {
-                deletedAt: null
-            }
-        });
-        res.json({
-            results,
-            ok: true
-        })
-    } catch (error) {
-        res.json({
-            msg: error.message,
-            ok: false
-        })
-    }
-})
+router.get('/', validateJWT, adminValidate, listContacts)
 
 // POST contacts
 router.post(
