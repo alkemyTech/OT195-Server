@@ -1,12 +1,12 @@
 const { Public, Social } = require("../models");
 
-const getPublic = async(req, res, next) => {
-
-  const { name, image, phone, address, email, welcomeTitle, welcomeText } = await Public.findOne({
-    where: {
-      id: 1
-    }
-  });
+const getPublic = async (req, res, next) => {
+  const { name, image, phone, address, email, welcomeTitle, welcomeText } =
+    await Public.findOne({
+      where: {
+        id: 1,
+      },
+    });
 
   const socialMedia = await Social.findAll();
 
@@ -82,7 +82,7 @@ const getPublic = async(req, res, next) => {
     },
   };
   res.status(200).json({
-    results,
+    results: data,
     ok: true,
   });
 };
