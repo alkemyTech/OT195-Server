@@ -21,7 +21,7 @@ const createTestimony = async(req , res , next) =>{
             content,
             image,
         });
-        return res.status(200).send(testimonyCreate);
+        return res.status(200).json({testimonyCreate , ok:true});
     }catch(error){
         next(error);
         console.log(error);
@@ -47,9 +47,9 @@ const modifyTestimony = async(req , res , next) =>{
             idTestimony.content = content ? content : idTestimony.content;
             idTestimony.image = image ? image : idTestimony.image;
             idTestimony.save();
-            return res.status(200).send(idTestimony);
+            return res.status(200).json({ idTestimony, ok: true })
         }
-        return res.status(404).json({ error: "no se encuntra ese id" });
+        return res.status(404).json({ error: "no se encuntra ese id", ok:false });
     }catch(error){
         next(error);
         console.log(error);
