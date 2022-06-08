@@ -21,7 +21,7 @@ const createTestimony = async(req , res , next) =>{
             content,
             image,
         });
-        return res.status(200).send(testimonyCreate);
+        return res.status(200).json({testimonyCreate , ok:true});
     }catch(error){
         next(error);
         console.log(error);
@@ -37,15 +37,19 @@ const modifyTestimony = async(req , res , next) =>{
         if(req.file){
             image = req.file.filename
         }
-        const allTestimonies = await Testimony.findAll()
-        const idTestimony = allTestimonies.find(el => el.id.toString() === id);
+        // const allTestimonies = await Testimony.findAll()
+        // const idTestimony = allTestimonies.find(el => el.id.toString() === id);
+        const idTestimony = await Testimony.findOne({
+            where:{id}
+        });
         if(idTestimony){
             idTestimony.name = name ? name : idTestimony.name;
             idTestimony.content = content ? content : idTestimony.content;
             idTestimony.image = image ? image : idTestimony.image;
-            return res.status(200).send(idTestimony);
+            idTestimony.save();
+            return res.status(200).json({ idTestimony, ok: true })
         }
-        return res.status(404).json({ error: "no se encuntra ese id" });
+        return res.status(404).json({ error: "no se encuntra ese id", ok:false });
     }catch(error){
         next(error);
         console.log(error);
