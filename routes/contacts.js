@@ -2,9 +2,9 @@ const router = require('express').Router();
 const { check } = require("express-validator");
 
 const { validateJWT } = require('../middlewares/validate-JWT');
-const { adminValidate } = require('../middlewares/adminValidate');
-const {createContact} = require ("../controllers/contacts")
+const { createContact, listContacts } = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
+const { adminValidate } = require("../middlewares/adminValidate");
 
 const { contact } = require('../models');
 
@@ -26,6 +26,8 @@ router.get('/', validateJWT, adminValidate, async(req, res) => {
         })
     }
 })
+
+router.get('/', validateJWT, adminValidate, listContacts)
 
 // POST contacts
 router.post(
