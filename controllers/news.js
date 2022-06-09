@@ -30,7 +30,6 @@ const deleteNew = async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log(id);
     const entry = await Entry.findOne({ where: { id } });
 
     if (!entry) return res.status(404).json({ msg: "Not found.", ok: false });

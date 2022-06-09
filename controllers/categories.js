@@ -18,6 +18,29 @@ const createCategory = async(req, res) => {
     }
 }
 
+const deleteCategory = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const category = await Category.findOne({ where: { id } });
+  
+      if (!category) return res.status(404).json({ msg: "Not found.", ok: false });
+  
+      if (category.deletedAt)
+        return res.status(404).json({ msg: "Not found.", ok: false });
+  
+        await category.destroy();
+  
+        return res
+        .status(200)
+        .json({ results: { msg: "Category deleted successfully." }, ok: true });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "Internal Server Error.", ok: false });
+    }
+  };
+
 module.exports = {
-    createCategory
+    createCategory,
+    deleteCategory
 }
