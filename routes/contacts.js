@@ -27,6 +27,7 @@ router.get('/', validateJWT, adminValidate, async(req, res) => {
     }
 })
 
+
 router.get('/', validateJWT, adminValidate, listContacts)
 
 // POST contacts
