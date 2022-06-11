@@ -12,7 +12,18 @@ const createCategory = async(req, res) => {
             name,
             description
         });
-        return res.status(200).json({msg: 'Category created successfully', ok: true})
+        return res.status(200).json({msg: 'Category created successfully', ok: true});
+    } catch (error) {
+        return res.status(500).json({ msg: error.message, ok: false });
+    }
+}
+
+const listCategories = async(req, res) => {
+    try {
+        const results = await Category.findAll({
+            attributes: ['name']
+        });
+        return res.status(200).json({results, ok: true});
     } catch (error) {
         return res.status(500).json({ msg: error.message, ok: false });
     }
@@ -42,5 +53,6 @@ const deleteCategory = async (req, res) => {
 
 module.exports = {
     createCategory,
-    deleteCategory
+    deleteCategory,
+    listCategories
 }
