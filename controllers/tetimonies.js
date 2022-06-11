@@ -4,8 +4,8 @@ const createTestimony = async(req , res , next) =>{
     try{
         const {name , content } = req.body;
         let image ;
-        console.log(req.body)
-        console.log(req.file)
+        // console.log(req.body)
+        // console.log(req.file)
         if(req.file){
             image = req.file.filename
         }
