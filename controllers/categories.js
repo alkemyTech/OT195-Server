@@ -21,7 +21,7 @@ const createCategory = async(req, res) => {
 const listCategories = async(req, res) => {
     try {
         const results = await Category.findAll({
-            attributes: ['name']
+            attributes: ['id','name','description']
         });
         return res.status(200).json({results, ok: true});
     } catch (error) {
