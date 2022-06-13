@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const {getPublic} = require("../controllers/organizations")
 
 const { getPublic } = require('../controllers/organizations')
 

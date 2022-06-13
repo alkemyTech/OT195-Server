@@ -16,7 +16,6 @@ const router = Router();
 router.get('/', getNewsList)
 
 // GET news details
-
 router.get(
   "/:id",
   // [
@@ -58,19 +57,10 @@ router.post(
   createNews
 );
 
+//Put news
 router.put("/modify/:id" ,validateJWT, adminValidate, modifyNews);
 
-router.delete(
-  "/:id",
-  [
-    validateJWT,
-    check("id", `The field 'id' is required on the request params.`)
-      .notEmpty()
-      .isInt()
-      .withMessage(`The field 'id' must be a number.`),
-  ],
-  deleteNew
-);
-
+//Delete new
+router.delete('/delete/:id',validateJWT, adminValidate, deleteNew)
 
 module.exports = router;
