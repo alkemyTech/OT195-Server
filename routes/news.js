@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 
 // controllers
 
-const { getNewsDetails, getNewsList, createNews , modifyNews } = require("../controllers/news");
+const { getNewsDetails, getNewsList, createNews , modifyNews, deleteNew } = require("../controllers/news");
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require('../middlewares/validate-JWT')
 const { adminValidate } = require('../middlewares/adminValidate')
@@ -16,7 +16,6 @@ const router = Router();
 router.get('/', getNewsList)
 
 // GET news details
-
 router.get(
   "/:id",
   // [
@@ -58,7 +57,10 @@ router.post(
   createNews
 );
 
+//Put news
 router.put("/modify/:id" ,validateJWT, adminValidate, modifyNews);
 
+//Delete new
+router.delete('/delete/:id',validateJWT, adminValidate, deleteNew)
 
 module.exports = router;
