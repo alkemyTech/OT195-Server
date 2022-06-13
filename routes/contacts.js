@@ -6,11 +6,11 @@ const { createContact, listContacts } = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
 const { adminValidate } = require("../middlewares/adminValidate");
 
-const { contact } = require('../models');
+const { Contact } = require('../models');
 
 router.get('/', validateJWT, adminValidate, async(req, res) => {
     try {
-        const results = await contact.findAll({
+        const results = await Contact.findAll({
             where: {
                 deletedAt: null
             }
