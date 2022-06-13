@@ -2,8 +2,13 @@ const {Testimony} = require("../models");
 
 const createTestimony = async(req , res , next) =>{
     try{
-        const {name , content} = req.body;
-        const image = req.file.filename
+        const {name , content } = req.body;
+        let image ;
+        // console.log(req.body)
+        // console.log(req.file)
+        if(req.file){
+            image = req.file.filename
+        }
         if(!name || name.length < 1){
             return res.status(404).
             json({error:"The field 'name' is required on the request params." ,
@@ -57,4 +62,33 @@ const modifyTestimony = async(req , res , next) =>{
     }
 }
 
-module.exports = {createTestimony , modifyTestimony } ; 
+const allTestimonies = async(req,res , next)=>{
+    try{
+        const testimonies = await Testimony.findAll();
+        return res.status(200).json({results: testimonies , ok:true})
+    }catch(error){
+        next(error)
+        console.log(error);
+        return res.status(500).json({msg:"internal server error" , ok:false })
+    }
+}
+
+const deletedTestimony = async (req, res , next) =>{
+    try{
+        const {id} = req.params;
+        const idTestimony = await Testimony.findOne({
+            where:{id}
+        });
+        if(!idTestimony){
+            return res.status(404).json({error:"No se encuentra id" , ok:false});
+        }
+        await idTestimony.destroy();
+        return res.status(200).json({msg:"New deleted successfully", ok:true} );
+    }catch(error){
+        console.log(error);
+        next(error);
+        return res.status(500).json({msg:"internal server error" , ok:false})
+    }
+}
+
+module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony } ; 
