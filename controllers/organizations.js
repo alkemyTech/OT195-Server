@@ -82,7 +82,7 @@ const getPublic = async (req, res, next) => {
     },
   };
   res.status(200).json({
-    results: data,
+    results,
     ok: true,
   });
 };
