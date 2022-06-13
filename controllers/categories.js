@@ -29,31 +29,53 @@ const listCategories = async(req, res) => {
     }
 }
 
-const updateCategory = async (req, res, next) => {
-  try {
+const deleteCategory = async (req, res) => {
     const { id } = req.params;
-    const { name, description } = req.body;
-    const category = await Category.findByPk(id);
-
-    if (category && !category.deletedAt) {
-      await category.update({
-        name,
-        description,
-      });
-      await category.save();
-      return res.status(200).json({ category, ok: true });
+  
+    try {
+      const category = await Category.findOne({ where: { id } });
+  
+      if (!category) return res.status(404).json({ msg: "Not found.", ok: false });
+  
+      if (category.deletedAt)
+        return res.status(404).json({ msg: "Not found.", ok: false });
+  
+        await category.destroy();
+  
+        return res
+        .status(200)
+        .json({ results: { msg: "Category deleted successfully." }, ok: true });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "Internal Server Error.", ok: false });
     }
-    return res.status(404).json({ error: "Category not found.", ok: false });
-  } catch (error) {
-    console.log(error);
-    next(error);
-    return res.status(500).json({ msg: "Internal server error", ok: false });
-  }
-};
+  };
+
+  const updateCategory = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { name, description } = req.body;
+      const category = await Category.findByPk(id);
+  
+      if (category && !category.deletedAt) {
+        await category.update({
+          name,
+          description,
+        });
+        await category.save();
+        return res.status(200).json({ category, ok: true });
+      }
+      return res.status(404).json({ error: "Category not found.", ok: false });
+    } catch (error) {
+      console.log(error);
+      next(error);
+      return res.status(500).json({ msg: "Internal server error", ok: false });
+    }
+  };
 
 module.exports = {
     createCategory,
+    deleteCategory,
     listCategories,
     updateCategory
 }
-
