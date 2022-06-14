@@ -16,9 +16,47 @@ const putImagenColeccion = async (req, res) => {
             msg: `User not found.`,
           });
         }
-
         break;
-
+      case "news":
+        modelo = await Entry.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Entry not found.`,
+          });
+        }
+        break;
+      case "members":
+        modelo = await Member.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Member not found.`,
+          });
+        }
+        break;
+      case "public":
+        modelo = await Public.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Public not found.`,
+          });
+        }
+        break;
+      case "slides":
+        modelo = await Slide.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Slide not found.`,
+          });
+        }
+        break;
+      case "testimonies":
+        modelo = await Testimony.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Testimony not found.`,
+          });
+        }
+        break;
       default:
         return res.status(500).json({ msg: "Internal server error." });
     }
