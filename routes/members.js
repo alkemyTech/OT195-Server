@@ -19,7 +19,10 @@ const {
 /* GET members. */
 router.get('/', validateJWT, adminValidate, listMembers);
 
-// Create Members
+// Create members
 router.post("/", validateJWT, adminValidate, createMember);
+
+// Update members
+router.put("/:id", validateJWT, adminValidate, updateMember);
 
 module.exports = router;
