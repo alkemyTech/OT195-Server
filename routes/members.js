@@ -25,4 +25,7 @@ router.post("/", validateJWT, adminValidate, createMember);
 // Update members
 router.put("/:id", validateJWT, adminValidate, updateMember);
 
+// Delete member
+router.delete('/:id', validateJWT, adminValidate, deleteMember);
+
 module.exports = router;
