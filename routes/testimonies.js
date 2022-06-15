@@ -7,9 +7,9 @@ const { upload } = require("../middlewares/multer");
 
 const router = Router();
 
-router.post("/testimonials", upload.single("image") , validateJWT , adminValidate  ,createTestimony );
+router.post("/testimonials",validateJWT , adminValidate  , createTestimony ); // para el post de imagen utilo la ruta de uploads.js
 
-router.put("/testimonials/:id" , upload.single("image"), validateJWT, adminValidate, modifyTestimony);
+router.put("/testimonials/:id", validateJWT, adminValidate, modifyTestimony); // para el put de imagen utilo la ruta de uploads.js
 
 router.get("/", allTestimonies);
 
