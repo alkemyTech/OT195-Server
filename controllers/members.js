@@ -5,7 +5,9 @@ const {
 const createMember = async (req, res) => {
   const {
     name,
-    image
+    image,
+    role,
+    description
   } = req.body;
 
   if (!name) {
@@ -18,7 +20,9 @@ const createMember = async (req, res) => {
   try {
     await Member.create({
       name,
-      image
+      image,
+      role,
+      description
     });
     return res.status(200).json({
       msg: 'Member created successfully',
@@ -36,7 +40,7 @@ const listMembers = async (req, res) => {
   console.log("listmembers");
   try {
     const results = await Member.findAll({
-      attributes: ['id', 'name', 'image']
+      attributes: ['id', 'name', 'image', 'role', 'description']
     });
     return res.status(200).json({
       results,
@@ -99,7 +103,9 @@ const updateMember = async (req, res, next) => {
     } = req.params;
     const {
       name,
-      image
+      image,
+      description,
+      role
     } = req.body;
     const member = await Member.findByPk(id);
 
@@ -107,6 +113,8 @@ const updateMember = async (req, res, next) => {
       await member.update({
         name,
         image,
+        role,
+        description
       });
       await member.save();
       return res.status(200).json({
