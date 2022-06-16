@@ -50,7 +50,9 @@ const putImagenColeccion = async (req, res) => {
         }
         break;
       case "testimonies":
-        modelo = await Testimony.findOne({ where: { id, deletedAt: null } });
+        modelo = await Testimony.findOne({ where: { id,
+          //  deletedAt: null 
+          } });
         if (!modelo) {
           return res.status(400).json({
             msg: `Testimony not found.`,
@@ -70,7 +72,7 @@ const putImagenColeccion = async (req, res) => {
     }
 
     // Se guarda la imagen en la nube
-    const { tempFilePath } = req.files.image;
+    const { tempFilePath } = req.files.image; // para usar req.files instalo la libreria "express-fileupload"
     const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
     modelo.image = secure_url;
 

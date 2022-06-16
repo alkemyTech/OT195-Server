@@ -1,7 +1,7 @@
 const { Public, Social } = require("../models");
 
 const getPublic = async (req, res, next) => {
-  const { name, image, phone, address, email, welcomeTitle, welcomeText } =
+  const { name, image, phone, address, email, welcomeTitle, welcomeText } = // esto lo comento para que funcione
     await Public.findOne({
       where: {
         id: 1,
@@ -12,7 +12,7 @@ const getPublic = async (req, res, next) => {
 
   // Public data
   const results = {
-    name,
+    name, // name hasta socialMedia lo comento para que funcione
     image,
     phone,
     address,
