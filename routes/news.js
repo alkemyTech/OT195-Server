@@ -64,3 +64,5 @@ router.put("/modify/:id" ,validateJWT, adminValidate, modifyNews);
 router.delete('/delete/:id',validateJWT, adminValidate, deleteNew)
 
 module.exports = router;
+
+{"npx sequelize-cli model:generate --name Staff --attributes name:string,role:enum:'{Presidente, CEO, Fundador,Fundadora, Colaborador, Colaboradora}',image:string,description:text"}
