@@ -14,6 +14,12 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      role: {
+        type: Sequelize.ENUM('Presidente', 'CEO', 'Fundador', 'Fundadora', 'Colaborador', 'Colaboradora')
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
