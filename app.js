@@ -4,6 +4,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
+
 require("dotenv").config();
 
 // Routers
@@ -17,6 +19,8 @@ const organizationsRouter = require("./routes/organizations");
 const testimoniesRouter = require("./routes/testimonies");
 const categoriesRouter = require("./routes/categories");
 const membersRouter = require("./routes/members")
+const uploadRouter = require("./routes/uploads");
+
 const app = express();
 app.use(cors());
 
@@ -33,6 +37,12 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
 // Routes
 app.use("/", indexRouter);
@@ -45,7 +55,7 @@ app.use("/activities", activitiesRouter);
 app.use("/testimonies", testimoniesRouter);
 app.use("/categories", categoriesRouter);
 app.use("/members", membersRouter);
-
+app.use("/upload", uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   Member.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    role: DataTypes.ENUM('Presidente', 'CEO', 'Fundador', 'Fundadora', 'Colaborador', 'Colaboradora'),
+    description: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Member',
