@@ -25,16 +25,16 @@ module.exports = {
       .withMessage("Name is required")
       .isLength({ min: 4 })
       .withMessage("Name must contain at least 4 characters")
-      .isAlpha()
-      .withMessage("Name must contains only letters"),
+      .isString()
+      .withMessage("Name must contain only letters"),
 
     body("lastName")
       .exists()
       .trim()
       .notEmpty()
       .withMessage("Surname is required")
-      .isAlpha()
-      .withMessage("Surname must contains only letters")
+      .isString()
+      .withMessage("Surname must contain only letters")
       .isLength({ min: 4 })
       .withMessage("Surname must contain at least 4 characters"),
 

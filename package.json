@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon run ./bin/www",
     "test:activities": "jest test/activities.test.js --verbose --detectOpenHandles",
-    "test:auth": "jest test/auth.test.js --verbose"
+    "test:auth": "jest test/auth.test.js --verbose --detectOpenHandles"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
