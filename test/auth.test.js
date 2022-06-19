@@ -151,73 +151,79 @@ const requests = {
 const userToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxOSwiZW1haWwiOiJycm9tZXJvQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkUDhSQkgySW1SbXM2N3BjNjkxTlhxZXZSa0hYQmd2NjhjelpzMWxGeUZRM3FLdmIza092ZGEiLCJyb2xlSWQiOjIsImZpcnN0TmFtZSI6IlJhcXVlbCIsImxhc3ROYW1lIjoiUm9tZXJvIiwiZGVsZXRlZEF0IjpudWxsLCJpbWFnZSI6Imh0dHBzOi8vd3d3LmRlc2lnbmV2by5jb20vcmVzL3RlbXBsYXRlcy90aHVtYl9zbWFsbC9jb2xvcmZ1bC1oYW5kLWFuZC13YXJtLWNvbW11bml0eS5wbmcifSwiaWF0IjoxNjU1NDkzMTc5LCJleHAiOjE2NjMyNjkxNzl9.mTytNdlIkggcEv7k3fPgVgsECZBbPo36eW_BF_iZrFY";
 
-// describe("POST /auth/login", () => {
-//   it("POST /auth/login with wrong 'email' field data type", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({ email: true, password: "1234" })
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.invalidEmail);
-//         done();
-//       }).catch((err) => done(err));
-//   });
+describe("POST /auth/login", () => {
+  it("POST /auth/login with wrong 'email' field data type", (done) => {
+    request
+      .post("/auth/login")
+      .send({ email: true, password: "1234" })
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidEmail);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 
-//   it("POST /auth/login with wrong 'password' field data type", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({ email: "test@test.com", password: true })
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.invalidPassword);
-//         done();
-//       }).catch((err) => done(err));
-//   });
+  it("POST /auth/login with wrong 'password' field data type", (done) => {
+    request
+      .post("/auth/login")
+      .send({ email: "test@test.com", password: true })
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidPassword);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 
-//   it("POST /auth/login with missing fields", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({})
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.missingFields);
-//         done().catch((err) => done(err));
-//       });
-//   });
+  it("POST /auth/login with missing fields", (done) => {
+    request
+      .post("/auth/login")
+      .send({})
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.missingFields);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 
-//   it("POST /auth/login with an unregistered user", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({ email: "example@example.com", password: "1234" })
-//       .then((res) => {
-//         expect(res.statusCode).toBe(404);
-//         expect(res.body).toMatchObject(responses.rejected.notFound);
-//         done().catch((err) => done(err));
-//       });
-//   });
+  it("POST /auth/login with an unregistered user", (done) => {
+    request
+      .post("/auth/login")
+      .send({ email: "example@example.com", password: "1234" })
+      .then((res) => {
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toMatchObject(responses.rejected.notFound);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 
-//   it("POST /auth/login with a soft deleted user", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({ email: "test@test.com", password: "1234" })
-//       .then((res) => {
-//         expect(res.statusCode).toBe(404);
-//         expect(res.body).toMatchObject(responses.rejected.notFound);
-//         done().catch((err) => done(err));
-//       });
-//   });
+  it("POST /auth/login with a soft deleted user", (done) => {
+    request
+      .post("/auth/login")
+      .send({ email: "test@test.com", password: "1234" })
+      .then((res) => {
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toMatchObject(responses.rejected.notFound);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 
-//   it("POST /auth/login successfully", (done) => {
-//     request
-//       .post("/auth/login")
-//       .send({ email: "mconde@test.com", password: "Sc4M3urV" })
-//       .then((res) => {
-//         expect(res.statusCode).toBe(200);
-//         expect(res.body).toMatchObject(responses.accepted.login);
-//         done().catch((err) => done(err));
-//       });
-//   });
-// });
+  it("POST /auth/login successfully", (done) => {
+    request
+      .post("/auth/login")
+      .send({ email: "mconde@test.com", password: "Sc4M3urV" })
+      .then((res) => {
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toMatchObject(responses.accepted.login);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
 
 // describe("POST /auth/register", () => {
 //   it("POST /auth/register with a wrong value data type in 'firstName' field", (done) => {
@@ -371,40 +377,40 @@ const userToken =
 //   });
 // });
 
-describe("GET /auth/me", () => {
-  it("GET /auth/me without JWT", (done) => {
-    request
-      //JWT Expected
-      .post("/auth/me")
-      .then((res) => {
-        expect(res.statusCode).toBe(401);
-        expect(res.body).toMatchObject(responses.rejected.me);
-        done();
-      })
-      .catch((err) => done(err));
-  });
+// describe("GET /auth/me", () => {
+//   it("GET /auth/me without JWT", (done) => {
+//     request
+//       //JWT Expected
+//       .post("/auth/me")
+//       .then((res) => {
+//         expect(res.statusCode).toBe(401);
+//         expect(res.body).toMatchObject(responses.rejected.me);
+//         done();
+//       })
+//       .catch((err) => done(err));
+//   });
 
-  it("GET /auth/me with a wrong JWT", (done) => {
-    request
-      .post("/auth/me")
-      .set("X-Api-Key", 1234)
-      .then((res) => {
-        expect(res.statusCode).toBe(401);
-        expect(res.body).toMatchObject(responses.rejected.me);
-        done();
-      })
-      .catch((err) => done(err));
-  });
+//   it("GET /auth/me with a wrong JWT", (done) => {
+//     request
+//       .post("/auth/me")
+//       .set("X-Api-Key", 1234)
+//       .then((res) => {
+//         expect(res.statusCode).toBe(401);
+//         expect(res.body).toMatchObject(responses.rejected.me);
+//         done();
+//       })
+//       .catch((err) => done(err));
+//   });
 
-  it("GET /auth/me successfully", (done) => {
-    request
-      .post("/auth/me")
-      .set("X-Api-Key", userToken)
-      .then((res) => {
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toMatchObject(responses.accepted.me);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
+//   it("GET /auth/me successfully", (done) => {
+//     request
+//       .post("/auth/me")
+//       .set("X-Api-Key", userToken)
+//       .then((res) => {
+//         expect(res.statusCode).toBe(200);
+//         expect(res.body).toMatchObject(responses.accepted.me);
+//         done();
+//       })
+//       .catch((err) => done(err));
+//   });
+// });
