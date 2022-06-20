@@ -21,7 +21,6 @@ const categoriesRouter = require("./routes/categories");
 const membersRouter = require("./routes/members");
 const uploadRouter = require("./routes/uploads");
 
-
 const app = express();
 app.use(cors());
 
