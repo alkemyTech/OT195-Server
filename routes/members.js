@@ -21,6 +21,10 @@ const { Member } = require("../models");
 // Update members
 router.put("/:id", validateJWT, adminValidate, updateMember);
 
+// Delete member
+router.delete("/:id", validateJWT, adminValidate, deleteMember);
+
+module.exports = router;
 module.exports = router;
 /* GET members. */
 router.get("/", async (req, res, next) => {
