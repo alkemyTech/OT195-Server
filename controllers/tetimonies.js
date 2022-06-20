@@ -9,22 +9,18 @@ const createTestimony = async (req, res, next) => {
     console.log(req.body);
     console.log(req.files);
     if (!name || name.length < 1) {
-      return res
-        .status(404)
-        .json({
-          error: "The field 'name' is required on the request params.",
-          param: "name",
-          location: "body",
-        });
+      return res.status(404).json({
+        error: "The field 'name' is required on the request params.",
+        param: "name",
+        location: "body",
+      });
     }
     if (!content || content.length < 1) {
-      return res
-        .status(404)
-        .json({
-          error: "The field 'content' is required on the request params.",
-          param: "content",
-          location: "body",
-        });
+      return res.status(404).json({
+        error: "The field 'content' is required on the request params.",
+        param: "content",
+        location: "body",
+      });
     }
     let image;
     if (req.files) {
