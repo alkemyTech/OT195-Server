@@ -117,8 +117,10 @@ module.exports = {
     const token = await generateJWT(newUser);
 
     res.status(200).json({
-      token,
-      msg: "User created succesfully",
+      results: {
+        token,
+        msg: "User created succesfully",
+      },
       ok: true,
     });
   },

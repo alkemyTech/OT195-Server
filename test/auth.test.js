@@ -5,7 +5,7 @@ const request = supertest(app);
 const responses = {
   rejected: {
     missingFields: {
-      msg: "Email is required",
+      msg: "'email' field is required in the request's body",
     },
     invalidName: {
       msg: "Name must contain only letters",
@@ -14,7 +14,7 @@ const responses = {
       msg: "Name must contain at least 4 characters",
     },
     invalidSurname: {
-      msg: "Name must contain only letters",
+      msg: "Surname must contain only letters",
     },
     shortSurname: {
       msg: "Surname must contain at least 4 characters",
@@ -61,7 +61,7 @@ const responses = {
       },
     },
     register: {
-      msg: "User created succesfully",
+      results: {},
       ok: true,
     },
     me: {
@@ -74,14 +74,14 @@ const responses = {
 const requests = {
   register: {
     wrongName: {
-      firstName: new Date(),
+      firstName: true,
       lastName: "Test",
       email: "example@example.com",
       password: "Password123",
     },
     wrongSurname: {
       firstName: "Name test",
-      lastName: new Date(),
+      lastName: false,
       email: "example@example.com",
       password: "Password123",
     },
@@ -95,7 +95,8 @@ const requests = {
       firstName: "Name test",
       lastName: "Test",
       password: "Password123",
-      password: new Date(),
+      email: "example@example.com",
+      password: 0.141516,
     },
     shortName: {
       firstName: "123",
@@ -151,133 +152,11 @@ const requests = {
 const userToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxOSwiZW1haWwiOiJycm9tZXJvQHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkUDhSQkgySW1SbXM2N3BjNjkxTlhxZXZSa0hYQmd2NjhjelpzMWxGeUZRM3FLdmIza092ZGEiLCJyb2xlSWQiOjIsImZpcnN0TmFtZSI6IlJhcXVlbCIsImxhc3ROYW1lIjoiUm9tZXJvIiwiZGVsZXRlZEF0IjpudWxsLCJpbWFnZSI6Imh0dHBzOi8vd3d3LmRlc2lnbmV2by5jb20vcmVzL3RlbXBsYXRlcy90aHVtYl9zbWFsbC9jb2xvcmZ1bC1oYW5kLWFuZC13YXJtLWNvbW11bml0eS5wbmcifSwiaWF0IjoxNjU1NDkzMTc5LCJleHAiOjE2NjMyNjkxNzl9.mTytNdlIkggcEv7k3fPgVgsECZBbPo36eW_BF_iZrFY";
 
-describe("POST /auth/login", () => {
-  it("POST /auth/login with wrong 'email' field data type", (done) => {
-    request
-      .post("/auth/login")
-      .send({ email: true, password: "1234" })
-      .then((res) => {
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toMatchObject(responses.rejected.invalidEmail);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  it("POST /auth/login with wrong 'password' field data type", (done) => {
-    request
-      .post("/auth/login")
-      .send({ email: "test@test.com", password: true })
-      .then((res) => {
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toMatchObject(responses.rejected.invalidPassword);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  it("POST /auth/login with missing fields", (done) => {
-    request
-      .post("/auth/login")
-      .send({})
-      .then((res) => {
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toMatchObject(responses.rejected.missingFields);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  it("POST /auth/login with an unregistered user", (done) => {
-    request
-      .post("/auth/login")
-      .send({ email: "example@example.com", password: "1234" })
-      .then((res) => {
-        expect(res.statusCode).toBe(404);
-        expect(res.body).toMatchObject(responses.rejected.notFound);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  it("POST /auth/login with a soft deleted user", (done) => {
-    request
-      .post("/auth/login")
-      .send({ email: "test@test.com", password: "1234" })
-      .then((res) => {
-        expect(res.statusCode).toBe(404);
-        expect(res.body).toMatchObject(responses.rejected.notFound);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  it("POST /auth/login successfully", (done) => {
-    request
-      .post("/auth/login")
-      .send({ email: "mconde@test.com", password: "Sc4M3urV" })
-      .then((res) => {
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toMatchObject(responses.accepted.login);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-// describe("POST /auth/register", () => {
-//   it("POST /auth/register with a wrong value data type in 'firstName' field", (done) => {
+// describe("POST /auth/login", () => {
+//   it("POST /auth/login with wrong 'email' field data type", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.wrongName)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.invalidName);
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register with a value in 'firstName' field shorter than 4 characters", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.wrongName)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.invalidName);
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register with a wrong value data type in 'lastName' field", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.wrongSurname)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.invalidSurname);
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register with a value in 'lastName' field shorter than 4 characters", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.shortSurname)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.shortSurname);
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register with a wrong value data type in 'email' field", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.wrongEmail)
+//       .post("/auth/login")
+//       .send({ email: true, password: "1234" })
 //       .then((res) => {
 //         expect(res.statusCode).toBe(400);
 //         expect(res.body).toMatchObject(responses.rejected.invalidEmail);
@@ -286,10 +165,10 @@ describe("POST /auth/login", () => {
 //       .catch((err) => done(err));
 //   });
 
-//   it("POST /auth/register with a wrong value data type in 'password' field", (done) => {
+//   it("POST /auth/login with wrong 'password' field data type", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.wrongPass)
+//       .post("/auth/login")
+//       .send({ email: "test@test.com", password: true })
 //       .then((res) => {
 //         expect(res.statusCode).toBe(400);
 //         expect(res.body).toMatchObject(responses.rejected.invalidPassword);
@@ -298,76 +177,46 @@ describe("POST /auth/login", () => {
 //       .catch((err) => done(err));
 //   });
 
-//   it("POST /auth/register with a value in 'password' field shorter than 7 characters", (done) => {
+//   it("POST /auth/login with missing fields", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.shortPassword)
+//       .post("/auth/login")
+//       .send({})
 //       .then((res) => {
 //         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.shortPassword);
+//         expect(res.body).toMatchObject(responses.rejected.missingFields);
 //         done();
 //       })
 //       .catch((err) => done(err));
 //   });
 
-//   it("POST /auth/register with a value in 'password' without numbers", (done) => {
+//   it("POST /auth/login with an unregistered user", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.passWithoutNumber)
+//       .post("/auth/login")
+//       .send({ email: "example@example.com", password: "1234" })
 //       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(
-//           responses.rejected.invalidPassword_number
-//         );
+//         expect(res.statusCode).toBe(404);
+//         expect(res.body).toMatchObject(responses.rejected.notFound);
 //         done();
 //       })
 //       .catch((err) => done(err));
 //   });
 
-//   it("POST /auth/register with a value in 'password' without uppercase letters", (done) => {
+//   it("POST /auth/login with a soft deleted user", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.passWithoutUppercase)
+//       .post("/auth/login")
+//       .send({ email: "test@test.com", password: "1234" })
 //       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(
-//           responses.rejected.invalidPassword_uppercase
-//         );
+//         expect(res.statusCode).toBe(404);
+//         expect(res.body).toMatchObject(responses.rejected.notFound);
 //         done();
 //       })
 //       .catch((err) => done(err));
 //   });
 
-//   it("POST /auth/register with a value in 'password' without lowercase letters", (done) => {
+//   it("POST /auth/login successfully", (done) => {
 //     request
-//       .post("/auth/register")
-//       .send(requests.register.passWithoutLowercase)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(
-//           responses.rejected.invalidPassword_lowercase
-//         );
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register with an existing email", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.existingEmail)
-//       .then((res) => {
-//         expect(res.statusCode).toBe(400);
-//         expect(res.body).toMatchObject(responses.rejected.exisitingEmail);
-//         done();
-//       })
-//       .catch((err) => done(err));
-//   });
-
-//   it("POST /auth/register successfully", (done) => {
-//     request
-//       .post("/auth/register")
-//       .send(requests.register.accepted)
+//       .post("/auth/login")
+//       .send({ email: "mconde@test.com", password: "Sc4M3urV" })
 //       .then((res) => {
 //         expect(res.statusCode).toBe(200);
 //         expect(res.body).toMatchObject(responses.accepted.login);
@@ -376,6 +225,158 @@ describe("POST /auth/login", () => {
 //       .catch((err) => done(err));
 //   });
 // });
+
+describe("POST /auth/register", () => {
+  it("POST /auth/register with a wrong value data type in 'firstName' field", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.wrongName)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidName);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'firstName' field shorter than 4 characters", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.shortName)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.shortName);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a wrong value data type in 'lastName' field", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.wrongSurname)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidSurname);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'lastName' field shorter than 4 characters", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.shortSurname)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.shortSurname);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a wrong value data type in 'email' field", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.wrongEmail)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidEmail);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a wrong value data type in 'password' field", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.wrongPass)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.invalidPassword);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'password' field shorter than 7 characters", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.shortPassword)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.shortPassword);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'password' without numbers", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.passWithoutNumber)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(
+          responses.rejected.invalidPassword_number
+        );
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'password' without uppercase letters", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.passWithoutUppercase)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(
+          responses.rejected.invalidPassword_uppercase
+        );
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with a value in 'password' without lowercase letters", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.passWithoutLowercase)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(
+          responses.rejected.invalidPassword_lowercase
+        );
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register with an existing email", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.existingEmail)
+      .then((res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toMatchObject(responses.rejected.exisitingEmail);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("POST /auth/register successfully", (done) => {
+    request
+      .post("/auth/register")
+      .send(requests.register.accepted)
+      .then((res) => {
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toMatchObject(responses.accepted.register);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
 
 // describe("GET /auth/me", () => {
 //   it("GET /auth/me without JWT", (done) => {
