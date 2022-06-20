@@ -14,10 +14,14 @@ const {
 /* GET members. */
 router.get("/", validateJWT, adminValidate, listMembers);
 
-// Create Members
+// Create members
 router.post("/", validateJWT, adminValidate, createMember);
 const { Member } = require("../models");
 
+// Update members
+router.put("/:id", validateJWT, adminValidate, updateMember);
+
+module.exports = router;
 /* GET members. */
 router.get("/", async (req, res, next) => {
   try {
