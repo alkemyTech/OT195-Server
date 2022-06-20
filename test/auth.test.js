@@ -383,7 +383,6 @@ describe("GET /auth/me", () => {
       //JWT Expected
       .get("/auth/me")
       .then((res) => {
-        console.log(res.body);
         expect(res.statusCode).toBe(401);
         expect(res.body).toMatchObject(responses.rejected.me.requiredJWT);
         done();
@@ -408,7 +407,6 @@ describe("GET /auth/me", () => {
       .get("/auth/me")
       .set("X-Api-Key", userToken)
       .then((res) => {
-        console.log(res.body);
         expect(res.statusCode).toBe(200);
         expect(res.body).toMatchObject(responses.accepted.me);
         done();

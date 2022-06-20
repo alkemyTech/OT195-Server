@@ -6,7 +6,9 @@ require("dotenv").config();
 const getUserDetails = async (req, res) => {
   try {
     const user = req.user;
-    return res.json({ results: { user }, ok: true });
+    const { password, ...userData } = user;
+
+    return res.json({ results: userData, ok: true });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error", ok: false });
