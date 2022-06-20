@@ -1,7 +1,7 @@
 const { Public, Social } = require("../models");
 
 const getPublic = async (req, res, next) => {
-  const { name, image, phone, address, email, welcomeTitle, welcomeText } = // esto lo comento para que funcione
+  const { name, image, phone, address, email, welcomeTitle, welcomeText } = req.body // esto lo comento para que funcione
     await Public.findOne({
       where: {
         id: 1,
