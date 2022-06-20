@@ -18,8 +18,8 @@ const activitiesRouter = require("./routes/activities");
 const organizationsRouter = require("./routes/organizations");
 const testimoniesRouter = require("./routes/testimonies");
 const categoriesRouter = require("./routes/categories");
+const membersRouter = require("./routes/members")
 const uploadRouter = require("./routes/uploads");
-
 const app = express();
 app.use(cors());
 
@@ -53,7 +53,12 @@ app.use("/contacts", contactsRouter);
 app.use("/activities", activitiesRouter);
 app.use("/testimonies", testimoniesRouter);
 app.use("/categories", categoriesRouter);
+app.use("/members", membersRouter);
 app.use("/upload", uploadRouter);
+<<<<<<< HEAD
+
+=======
+>>>>>>> dev
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -72,6 +77,7 @@ app.use(function (err, req, res, next) {
 });
 
 //app port listener
+// Comment this block on development to do the tests
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server initialized on port ${process.env.SERVER_PORT} `);
 });

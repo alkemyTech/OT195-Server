@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon run ./bin/www",
-    "test": "npx jest"
+    "test:activities": "jest test/activities.test.js --verbose --detectOpenHandles",
+    "test:auth": "jest test/auth.test.js --verbose --detectOpenHandles",
+    "test:contacts": "jest test/contacts.test.js --verbose --detectOpenHandles"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
@@ -30,12 +32,8 @@
   },
   "devDependencies": {
     "jest": "^28.1.1",
-    "sequelize-cli": "^6.2.0"
-  },
-  "eslintConfig": {
-    "env": {
-      "jest": true
-    }
+    "sequelize-cli": "^6.2.0",
+    "supertest": "^6.2.3"
   },
   "jest": {
     "testEnvironment": "node"

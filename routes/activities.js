@@ -21,14 +21,14 @@ router.post(
   validateJWT,
   adminValidate,
   [
-    check(
-      "name",
-      `The field 'name' is required on the request params.`
-    ).exists(),
-    check(
-      "content",
-      `The field 'content' is required on the request params.`
-    ).exists(),
+    check("name", `The field 'name' is required on the request params.`)
+      .exists()
+      .isString()
+      .withMessage("The field 'name' must be a string."),
+    check("content", `The field 'content' is required on the request params.`)
+      .exists()
+      .isString()
+      .withMessage("The field 'content' must be a string."),
     checkValidator,
   ],
   createActivity
@@ -57,6 +57,10 @@ router.put(
       .notEmpty()
       .isInt()
       .withMessage(`The field 'id' must be a number.`),
+    check("name", "The field 'name' must be a string.").isString().optional(),
+    check("content", "The field 'content' must be a string.")
+      .isString()
+      .optional(),
     checkValidator,
   ],
   putActivity
