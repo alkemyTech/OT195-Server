@@ -3,6 +3,16 @@ const { comparePassword, encryptPassword } = require("../helpers/bcrypt");
 const { User, Role } = require("../models");
 require("dotenv").config();
 
+const getUserDetails = async (req, res) => {
+  try {
+    const user = req.user;
+    return res.json({ results: { user }, ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Internal Server Error", ok: false });
+  }
+};
+
 module.exports = {
   logIn: async (req, res) => {
     const { email, password } = req.body;
@@ -124,4 +134,5 @@ module.exports = {
       ok: true,
     });
   },
+  getUserDetails,
 };
