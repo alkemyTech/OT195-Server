@@ -4,6 +4,9 @@ const request = supertest(app);
 
 const responses = {
   rejected: {
+    missingFields: {
+      msg: "Email is required",
+    },
     invalidName: {
       msg: "Name must contain only letters",
     },
@@ -17,7 +20,7 @@ const responses = {
       msg: "Surname must contain at least 4 characters",
     },
     invalidPassword: {
-      msg: "Invalid password",
+      msg: "Password must be a string",
     },
     invalidPassword_number: {
       msg: "Password must contain a number",
@@ -33,9 +36,6 @@ const responses = {
     },
     invalidEmail: {
       msg: "Invalid email",
-    },
-    missingFields: {
-      msg: "Invalid value",
     },
     exisitingEmail: {
       msg: "Email already exists",
