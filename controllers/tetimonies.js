@@ -115,4 +115,21 @@ const deletedTestimony = async (req, res , next) =>{
     }
 }
 
-module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony } ; 
+const detailTestimonies = async(req , res , next) =>{
+    try{
+        const {id} = req.params;
+        const idTestimony = await Testimony.findOne({
+            where:{id}
+        });
+        if(!idTestimony){
+            return res.status(404).json({error:"No se encuentra id" , ok:false});
+        }
+        return res.status(200).json({result:idTestimony , ok:true});
+    }catch(error){
+        console.log(error);
+        next(error);
+        return res.status(500).json({msg:"internal server error" , ok:false})
+    }
+}
+
+module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony, detailTestimonies} ; 
