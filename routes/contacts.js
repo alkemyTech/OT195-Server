@@ -8,26 +8,6 @@ const { adminValidate } = require("../middlewares/adminValidate");
 
 const { Contact } = require('../models');
 
-router.get('/', validateJWT, adminValidate, async(req, res) => {
-    try {
-        const results = await Contact.findAll({
-            where: {
-                deletedAt: null
-            }
-        });
-        res.json({
-            results,
-            ok: true
-        })
-    } catch (error) {
-        res.json({
-            msg: error.message,
-            ok: false
-        })
-    }
-})
-
-
 router.get('/', validateJWT, adminValidate, listContacts)
 
 // POST contacts
@@ -41,6 +21,10 @@ router.post(
     check(
       "email",
       `The field 'email' is required on the request params.`
+    ).exists(),
+    check(
+      "message",
+      `The field 'message' is required on the request params.`
     ).exists(),
     checkValidator,
   ],

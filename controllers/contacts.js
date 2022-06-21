@@ -10,8 +10,7 @@ const createContact = async (req, res) => {
       .status(201)
       .json({ msg: "¡Gracias por haberte contactado con nosotros!", ok: true });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ msg: "Internal Server Error.", ok: false });
+    return res.status(500).json({ msg: err, ok: false });
   }
 };
 
