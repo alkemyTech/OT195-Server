@@ -15,6 +15,7 @@ router.get("/", allTestimonies);
 
 router.delete("/:id", validateJWT, adminValidate, deletedTestimony)
 
+//detail the testimony
 router.get("/:id",detailTestimonies)
 
 

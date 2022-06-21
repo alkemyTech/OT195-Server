@@ -115,6 +115,8 @@ const deletedTestimony = async (req, res , next) =>{
     }
 }
 
+
+//detail the testimony
 const detailTestimonies = async(req , res , next) =>{
     try{
         const {id} = req.params;
