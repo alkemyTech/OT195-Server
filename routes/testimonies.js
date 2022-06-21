@@ -16,7 +16,7 @@ router.get("/", allTestimonies);
 router.delete("/:id", validateJWT, adminValidate, deletedTestimony)
 
 //detail the testimony
-router.get("/:id",detailTestimonies)
+// router.get("/:id",detailTestimonies)
 
 
 module.exports = router;

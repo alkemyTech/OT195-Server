@@ -134,4 +134,5 @@ const detailTestimonies = async(req , res , next) =>{
     }
 }
 
+
 module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony, detailTestimonies} ; 
