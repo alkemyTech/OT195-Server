@@ -116,8 +116,9 @@ const deletedTestimony = async (req, res , next) =>{
 }
 
 
+
 //detail the testimony
-const detailTestimonies = async(req , res , next) =>{
+const detailTestimony = async(req , res , next) =>{
     try{
         const {id} = req.params;
         const idTestimony = await Testimony.findOne({
@@ -135,4 +136,4 @@ const detailTestimonies = async(req , res , next) =>{
 }
 
 
-module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony, detailTestimonies} ; 
+module.exports = {createTestimony , modifyTestimony , allTestimonies, deletedTestimony, detailTestimony} ; 
