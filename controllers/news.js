@@ -19,7 +19,7 @@ const getNewsDetails = async (req, res) => {
     // desestructuring to return only the required fields
     const { deletedAt, ...details } = entry;
 
-    return res.json({ results: details, ok: true });
+    return res.status(200).json({ results: details, ok: true });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
