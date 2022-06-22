@@ -1,8 +1,7 @@
 const { Public, Social } = require("../models");
 
 const getPublic = async (req, res) => {
-  const { name, image, phone, address, email, welcomeTitle, welcomeText } = req.body
-
+  const { name, image, phone, address, email, welcomeTitle, welcomeText } =
     await Public.findOne({
       where: {
         id: 1,
@@ -87,8 +86,6 @@ const getPublic = async (req, res) => {
     ok: true,
   });
 };
-
-
 
 module.exports = {
   getPublic,
