@@ -17,7 +17,6 @@ const sendContactEmail = (email = "") => {
       await sgMail.send(message);
       resolve("Email enviado con éxito a " + email);
     } catch (err) {
-      console.log(err.response.body);
       reject("Error al enviar el email");
     }
   });
