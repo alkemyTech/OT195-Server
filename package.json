@@ -8,7 +8,9 @@
     "test:activities": "jest test/activities.test.js --verbose --detectOpenHandles",
     "test:auth": "jest test/auth.test.js --verbose --detectOpenHandles",
     "test:contacts": "jest test/contacts.test.js --verbose --detectOpenHandles",
-    "test:news": "jest test/news.test.js --verbose --detectOpenHandles"
+    "test:news": "jest test/news.test.js --verbose --detectOpenHandles",
+    "test:members": "jest test/members.test.js --verbose --detectOpenHandles"
+
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",

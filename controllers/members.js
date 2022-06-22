@@ -10,13 +10,6 @@ const createMember = async (req, res) => {
     description
   } = req.body;
 
-  if (!name) {
-    return res.status(400).json({
-      msg: "The field 'name' is required",
-      ok: false
-    });
-  }
-
   try {
     await Member.create({
       name,
@@ -98,9 +91,7 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res, next) => {
   try {
-    const {
-      id
-    } = req.params;
+    const {id} = req.params
     const {
       name,
       image,
@@ -118,7 +109,7 @@ const updateMember = async (req, res, next) => {
       });
       await member.save();
       return res.status(200).json({
-        member,
+        msg: "Member updated succesfully",
         ok: true
       });
     }
@@ -127,8 +118,6 @@ const updateMember = async (req, res, next) => {
       ok: false
     });
   } catch (error) {
-    console.log(error);
-    next(error);
     return res.status(500).json({
       msg: "Internal server error",
       ok: false
