@@ -1,12 +1,13 @@
 const { Entry } = require("../models");
 
 const getNewsDetails = async (req, res) => {
+
   const { id } = req.params;
 
   try {
     // Query
-    const { dataValues: entry } = await Entry.findOne({
-      where: { id: id },
+    const entry = await Entry.findOne({
+      where: { id },
       include: { association: "category", attributes: ["id", "name"] },
     });
 
@@ -17,9 +18,9 @@ const getNewsDetails = async (req, res) => {
       return res.status(404).json({ msg: "Not Found.", ok: false });
 
     // desestructuring to return only the required fields
-    const { deletedAt, ...details } = entry;
+    const { dataValues } = entry;
 
-    return res.status(200).json({ results: details, ok: true });
+    return res.status(200).json({ results: dataValues, ok: true });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
@@ -59,14 +60,17 @@ const createNews = async (req, res) => {
     categoryId,
     type: "1",
   };
-
   try {
     await Entry.create(newEntry);
     return res
       .status(201)
       .json({ results: { msg: "News created succesfully" }, ok: true });
   } catch (err) {
-    console.log(err);
+
+    if(err.errno = 1452) {
+      return res.status(500).json({ msg: "Param 'categoryId' doesn't match any category.", ok: false });
+    }
+
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
   }
 };
@@ -99,13 +103,13 @@ const modifyNews = async (req, res, next) => {
       idNews.content = content ? content : idNews.content;
       idNews.image = image ? image : idNews.image;
       idNews.save();
-      return res.status(200).json({ idNews, ok: true });
+      return res.status(200).json({ results: idNews, ok: true });
     }
-    return res.status(404).json({ error: "no se encuntra ese id", ok: false });
+    return res.status(404).json({ msg: "Not Found.", ok: false });
   } catch (error) {
     console.log(error);
     next(error);
-    return res.status(500).json({ msg: "internal server error", ok: false });
+    return res.status(500).json({ msg: "Internal server error.", ok: false });
   }
 };
 
