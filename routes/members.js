@@ -12,7 +12,7 @@ const {
 } = require("../controllers/members");
 
 /* GET members. */
-router.get("/", validateJWT, adminValidate, listMembers);
+router.get("/", listMembers);
 
 // Create members
 router.post("/", validateJWT, adminValidate, createMember);

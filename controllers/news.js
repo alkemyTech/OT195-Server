@@ -66,8 +66,8 @@ const createNews = async (req, res) => {
       .status(201)
       .json({ results: { msg: "News created succesfully" }, ok: true });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ msg: "Internal Server Error.", ok: false });
+    console.log(err.message)
+    return res.status(500).json({ msg: err.message, ok: false });
   }
 };
 

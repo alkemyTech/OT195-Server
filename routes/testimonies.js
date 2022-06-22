@@ -7,15 +7,15 @@ const { upload } = require("../middlewares/multer");
 
 const router = Router();
 
-router.post("/testimonials",validateJWT , adminValidate  , createTestimony ); 
+router.post("/",validateJWT , adminValidate  , createTestimony ); 
 
-router.put("/testimonials/:id", validateJWT, adminValidate, modifyTestimony); 
+router.put("/:id", validateJWT, adminValidate, modifyTestimony); 
 
 router.get("/", allTestimonies);
 
 router.delete("/:id", validateJWT, adminValidate, deletedTestimony)
 
-router.get("/:id",detailTestimonies)
+//router.get("/:id",detailTestimonies)
 
 
 module.exports = router;
