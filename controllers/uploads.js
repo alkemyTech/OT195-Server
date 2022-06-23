@@ -1,4 +1,12 @@
-const { User, Entry, Member, Public, Slide, Testimony } = require("../models");
+const {
+  User,
+  Entry,
+  Member,
+  Public,
+  Slide,
+  Testimony,
+  Activity,
+} = require("../models");
 
 const cloudinary = require("cloudinary").v2;
 cloudinary.config(process.env.CLOUDINARY_URL);
@@ -9,6 +17,14 @@ const putImagenColeccion = async (req, res) => {
   try {
     let modelo;
     switch (coleccion) {
+      case "activities":
+        modelo = await Activity.findOne({ where: { id, deletedAt: null } });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Activity not found.`,
+          });
+        }
+        break;
       case "users":
         modelo = await User.findOne({ where: { id, deletedAt: null } });
         if (!modelo) {
@@ -50,9 +66,12 @@ const putImagenColeccion = async (req, res) => {
         }
         break;
       case "testimonies":
-        modelo = await Testimony.findOne({ where: { id,
-          //  deletedAt: null 
-          } });
+        modelo = await Testimony.findOne({
+          where: {
+            id,
+            //  deletedAt: null
+          },
+        });
         if (!modelo) {
           return res.status(400).json({
             msg: `Testimony not found.`,

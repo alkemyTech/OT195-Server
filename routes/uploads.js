@@ -21,7 +21,7 @@ router.put(
   "/:coleccion/:id",
   [
     validateJWT,
-    check("id", "El id debe de ser de mongo").notEmpty(),
+    check("id", "'id' field is required on the request params").notEmpty(),
     check("coleccion").custom((coleccion) =>
       validateCollections(coleccion, coleccionesPermitidas)
     ),
