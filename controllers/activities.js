@@ -4,7 +4,7 @@ const putActivity = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const { name, image, content } = req.body;
+    const { name, content } = req.body;
 
     const activity = await Activity.findOne({ where: { id } });
 
@@ -16,7 +16,6 @@ const putActivity = async (req, res) => {
 
     activity.set({
       name,
-      image,
       content,
     });
 
@@ -24,7 +23,7 @@ const putActivity = async (req, res) => {
 
     return res
       .status(200)
-      .json({ results: { msg: "Activity updated successfully.", ok: true } });
+      .json({ results: { msg: "Activity updated successfully." }, ok: true });
   } catch (err) {
     console.log(err);
   }
@@ -33,9 +32,10 @@ const putActivity = async (req, res) => {
 const createActivity = async (req, res) => {
   try {
     const activity = await Activity.create(req.body);
-    return res
-      .status(201)
-      .json({ msg: "Activity created succesfully", ok: true });
+    return res.status(201).json({
+      results: activity,
+      ok: true,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
