@@ -1,7 +1,6 @@
 const { Entry } = require("../models");
 
 const getNewsDetails = async (req, res) => {
-
   const { id } = req.params;
 
   try {
@@ -52,23 +51,22 @@ const deleteNew = async (req, res) => {
 
 const createNews = async (req, res) => {
   // Fields required only to avoid unhandled exceptions
-  const { name, content, image, categoryId } = req.body;
+  const { name, content, categoryId } = req.body;
   const newEntry = {
     name,
     content,
-    image,
     categoryId,
     type: "1",
   };
   try {
-    await Entry.create(newEntry);
-    return res
-      .status(201)
-      .json({ results: { msg: "News created succesfully" }, ok: true });
+    const entryCreated = await Entry.create(newEntry);
+    return res.status(201).json({ results: entryCreated, ok: true });
   } catch (err) {
-
-    if(err.errno = 1452) {
-      return res.status(500).json({ msg: "Param 'categoryId' doesn't match any category.", ok: false });
+    if ((err.errno = 1452)) {
+      return res.status(500).json({
+        msg: "Param 'categoryId' doesn't match any category.",
+        ok: false,
+      });
     }
 
     return res.status(500).json({ msg: "Internal Server Error.", ok: false });
