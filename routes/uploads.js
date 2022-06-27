@@ -12,6 +12,7 @@ const coleccionesPermitidas = [
   "news",
   "members",
   "public",
+  "welcome",
   "slides",
   "testimonies",
   "activities",

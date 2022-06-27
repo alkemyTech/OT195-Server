@@ -1,7 +1,7 @@
 const { Public, Social } = require("../models");
 
 const getPublic = async (req, res) => {
-  const { name, image, phone, address, email, welcomeTitle, welcomeText } =
+  const { name, image, phone, address, email, welcomeTitle, welcomeText, welcomeImage} =
     await Public.findOne({
       where: {
         id: 1,
@@ -19,6 +19,7 @@ const getPublic = async (req, res) => {
     email,
     welcomeTitle,
     welcomeText,
+    welcomeImage,
     socialMedia,
     nav: {
       items: [
@@ -87,6 +88,19 @@ const getPublic = async (req, res) => {
   });
 };
 
+const modifyPublic = async (req,res) =>{
+  //const { name, image } = req.body
+  
+  try {
+    await Public.update(req.body, {where: {id: 1}})
+    res.status(200).json("Organization data sucessfully edited")
+  } catch (error) {
+      res.status(400).json(error.message)
+  }
+
+}
+
 module.exports = {
   getPublic,
+  modifyPublic
 };
