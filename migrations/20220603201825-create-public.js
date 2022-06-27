@@ -29,6 +29,9 @@ module.exports = {
       welcomeText: {
         type: Sequelize.TEXT
       },
+      welcomeImage: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

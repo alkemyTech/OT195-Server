@@ -50,7 +50,15 @@ const putImagenColeccion = async (req, res) => {
         }
         break;
       case "public":
-        modelo = await Public.findOne({ where: { id, deletedAt: null } });
+        modelo = await Public.findOne({ where: {id} });
+        if (!modelo) {
+          return res.status(400).json({
+            msg: `Public not found.`,
+          });
+        }
+        break;
+      case "welcome":
+        modelo = await Public.findOne({ where: {id} });
         if (!modelo) {
           return res.status(400).json({
             msg: `Public not found.`,
@@ -79,12 +87,15 @@ const putImagenColeccion = async (req, res) => {
         }
         break;
       default:
-        return res.status(500).json({ msg: "Internal server error." });
+        return res.status(500).json({ msg: "Internal Server Error"});
     }
 
     // Se limpian las imagenes previas que tenia el modelo
-    if (modelo.image) {
-      const nombreArr = modelo.image.split("/");
+    let imageColumn = modelo.image
+    if(coleccion === "welcome"){imageColumn= modelo.welcomeImage}
+
+    if (imageColumn) {
+      const nombreArr = imageColumn.split("/");
       const nombre = nombreArr[nombreArr.length - 1];
       const [public_id] = nombre.split(".");
       cloudinary.uploader.destroy(public_id);
@@ -93,14 +104,13 @@ const putImagenColeccion = async (req, res) => {
     // Se guarda la imagen en la nube
     const { tempFilePath } = req.files.image; // para usar req.files instalo la libreria "express-fileupload"
     const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
-    modelo.image = secure_url;
+    coleccion !== "welcome"? modelo.image = secure_url: modelo.welcomeImage = secure_url
 
     await modelo.save();
 
     return res.status(200).json({ msg: "Imagen subida correctamente." });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ msg: "Error interno." });
+    return res.status(500).json({ msg: err.message });
   }
 };
 
