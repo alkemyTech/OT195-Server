@@ -1,9 +1,58 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const { User } = require("../models");
+const { validateJWT } = require("../middlewares/validate-JWT");
+const { adminValidate } = require("../middlewares/adminValidate");
+const { check } = require("express-validator");
+const { checkValidator } = require("../middlewares/userValidate");
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/", validateJWT, adminValidate, async (req, res) => {
+  try {
+    const dbUsers = await User.findAll();
+    res.status(200).json({
+      results: dbUsers,
+      ok: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      msg: error.message,
+      ok: false,
+    });
+  }
 });
+
+// DELETE user
+router.delete(
+  "/:id",
+  validateJWT,
+  adminValidate,
+  [
+    check("id", `The user 'id' needs to be an integer.`).isInt(),
+    checkValidator,
+  ],
+  async (req, res) => {
+    let paramURL = req.params.id;
+    try {
+      const user = await User.findOne({
+        where: {
+          id: paramURL,
+        },
+      });
+      if (user != null) {
+        await user.destroy();
+        res.status(200).json({
+          msg: "User succesfully deleted",
+          ok: true,
+        });
+      }
+    } catch (error) {
+      res.status(400).json({
+        msg: error.message,
+        ok: false,
+      });
+    }
+  }
+);
 
 module.exports = router;
