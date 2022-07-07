@@ -26,7 +26,7 @@ router.get("/", validateJWT, adminValidate, async (req, res) => {
 router.delete(
   "/:id",
   validateJWT,
-  adminValidate,
+  // adminValidate,
   [
     check("id", `The user 'id' needs to be an integer.`).isInt(),
     checkValidator,
