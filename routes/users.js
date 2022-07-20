@@ -1,13 +1,18 @@
-var express = require("express");
-var router = express.Router();
+const { Router } = require("express");
 const { User } = require("../models");
 const { validateJWT } = require("../middlewares/validate-JWT");
 const { adminValidate } = require("../middlewares/adminValidate");
 const { check } = require("express-validator");
 const { checkValidator } = require("../middlewares/userValidate");
+const {modifyUser} = require("../controllers/auth")
+
+const router = Router();
 
 /* GET users listing. */
-router.get("/", validateJWT, adminValidate, async (req, res) => {
+router.get("/",
+ validateJWT, 
+ adminValidate, 
+ async (req, res) => {
   try {
     const dbUsers = await User.findAll();
     res.status(200).json({
@@ -54,5 +59,7 @@ router.delete(
     }
   }
 );
+
+router.put("/:id" , validateJWT, modifyUser); // modfico los datos del usuario
 
 module.exports = router;
