@@ -1,5 +1,3 @@
-// var express = require("express");
-// var router = express.Router();
 const { Router } = require("express");
 const { User } = require("../models");
 const { validateJWT } = require("../middlewares/validate-JWT");
