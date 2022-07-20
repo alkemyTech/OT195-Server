@@ -1,3 +1,5 @@
+// ruta para cloudinary , para guardar imagenes en la base de datos
+
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");

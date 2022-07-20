@@ -1,6 +1,7 @@
 const { generateJWT } = require("../helpers/generate-JWT");
 const { comparePassword, encryptPassword } = require("../helpers/bcrypt");
 const { User, Role } = require("../models");
+const { name } = require("ejs");
 require("dotenv").config();
 
 const getUserDetails = async (req, res) => {
@@ -14,6 +15,29 @@ const getUserDetails = async (req, res) => {
     return res.status(500).json({ msg: "Internal Server Error", ok: false });
   }
 };
+
+const modifyUser = async (req , res) =>{
+  try{
+    const {id} = req.params;
+    const {firstName , lastName , email} = req.body;
+    const idUser = await User.findOne({
+      where: {id}
+    });
+    if(!idUser){
+      return res.status(404).json({msg: "Not found", ok: false});
+    }
+    // console.log(firstName && " hola edgar")
+    idUser.firstName = firstName ? firstName : idUser.firstName;
+    idUser.lastName = lastName ? lastName : idUser.lastName;
+    idUser.email = email ? firstName : idUser.email
+    // idUser.set( {firstName, lastName , email} ) // otra forma de hacerlo  con sequelize
+    await idUser.save();
+    return res.status(200).send({result: idUser , ok:true })
+  }catch(error){
+    console.log(error);
+    return res.status(500).json({msg: "Internal Server Error" , ok: false} );
+  }
+}
 
 module.exports = {
   logIn: async (req, res) => {
@@ -137,4 +161,5 @@ module.exports = {
     });
   },
   getUserDetails,
+  modifyUser,
 };
