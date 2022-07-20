@@ -1,7 +1,6 @@
 const { generateJWT } = require("../helpers/generate-JWT");
 const { comparePassword, encryptPassword } = require("../helpers/bcrypt");
 const { User, Role } = require("../models");
-const { name } = require("ejs");
 require("dotenv").config();
 
 const getUserDetails = async (req, res) => {
