@@ -4,7 +4,7 @@ const { sendContactEmail } = require("../helpers/send-emails");
 const createContact = async (req, res) => {
   try {
     const {name , email , message , phone} = req.body
-    // const creando =  await Contact.create({name, email, message , phone}); // esto lo comento para que funcione , tira un error como que no existe la tabla
+    // const creando =  await Contact.create({name, email, message , phone}); // esto lo comento para que funcione , tira un error como que no existe la tabla;
     await sendContactEmail(req.body.email);
 
     return res
