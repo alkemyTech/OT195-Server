@@ -8,6 +8,7 @@ const {
   putActivity,
   getActivityById,
   getActivities,
+  deletedActivity
 } = require("../controllers/activities");
 const { checkValidator } = require("../middlewares/userValidate");
 const { validateJWT } = require("../middlewares/validate-JWT");
@@ -34,7 +35,9 @@ router.post(
   createActivity
 );
 
-router.get("/", [validateJWT, adminValidate], getActivities);
+router.get("/", 
+// [validateJWT, adminValidate],
+ getActivities);
 
 router.get(
   "/:id",
@@ -64,6 +67,21 @@ router.put(
     checkValidator,
   ],
   putActivity
+);
+
+//ruta para eleminar la actividad
+router.delete( 
+  "/:id",
+  [
+    validateJWT,
+    adminValidate,
+    check("id", "'id' is required on the request params.")
+      .notEmpty()
+      .isInt()
+      .withMessage("'id' must be a integer number."),
+
+  ],
+  deletedActivity
 );
 
 module.exports = router;
