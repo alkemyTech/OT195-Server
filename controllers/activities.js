@@ -1,4 +1,5 @@
 const { Activity } = require("../models");
+const cloudinary = require("cloudinary").v2; // traigo cloudinary
 
 const putActivity = async (req, res) => {
   const { id } = req.params;
@@ -68,9 +69,39 @@ const getActivityById = async (req, res) => {
   }
 };
 
+const deletedActivity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+    const idAcitivity= await Activity.findOne({
+      where: { id },
+    });
+    console.log(idAcitivity)
+    if (!idAcitivity) {
+      return res.status(404).json({ error: "No se encuentra id", ok: false });
+    }
+    if (idAcitivity.image) {
+      //elemino la imagen de la data base de Cloudinary
+      const nombreArr = idAcitivity.image.split("/");
+      const nombre = nombreArr[nombreArr.length - 1];
+      const [public_id] = nombre.split(".");
+      cloudinary.uploader.destroy(public_id, function (error, result) {
+        console.log(result, error);
+      });
+    }
+    await idAcitivity.destroy();
+    return res.status(200).json({ msg: "New deleted successfully", ok: true });
+  } catch (error) {
+    console.log(error);
+    next(error);
+    return res.status(500).json({ msg: "internal server error", ok: false });
+  }
+};
+
 module.exports = {
   createActivity,
   putActivity,
   getActivities,
   getActivityById,
+  deletedActivity,
 };

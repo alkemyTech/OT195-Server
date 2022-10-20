@@ -4,7 +4,7 @@ const { validateJWT } = require("../middlewares/validate-JWT");
 const { adminValidate } = require("../middlewares/adminValidate");
 const { check } = require("express-validator");
 const { checkValidator } = require("../middlewares/userValidate");
-const {modifyUser} = require("../controllers/auth")
+const {modifyUser , detailUser} = require("../controllers/auth")
 
 const router = Router();
 
@@ -61,5 +61,11 @@ router.delete(
 );
 
 router.put("/:id" , validateJWT, modifyUser); // modfico los datos del usuario
+
+router.get(
+  "/:id",
+  // [ validateJWT,],
+  detailUser
+);
 
 module.exports = router;

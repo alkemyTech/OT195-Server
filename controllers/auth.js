@@ -3,6 +3,24 @@ const { comparePassword, encryptPassword } = require("../helpers/bcrypt");
 const { User, Role } = require("../models");
 require("dotenv").config();
 
+
+const detailUser = async (req, res, next) => {  // funcion para traer un usario por su id
+  try {
+    const { id } = req.params; // traio por parmas el id
+    const idUser = await User.findOne({ // con este metedo de sequilize busco el user por el id que traje por parmas
+      where: { id },
+    });
+    if (!idUser) { // si no hay nada muestra el siguiente msj
+      return res.status(404).json({ error: "No se encuentra id", ok: false });
+    }
+    return res.status(200).json({ result: idUser, ok: true });
+  } catch (error) {
+    console.log(error);
+    next(error);
+    return res.status(500).json({ msg: "internal server error", ok: false });
+  }
+};
+
 const getUserDetails = async (req, res) => {
   try {
     const user = req.user;
@@ -28,7 +46,7 @@ const modifyUser = async (req , res) =>{
     // console.log(firstName && " hola edgar")
     idUser.firstName = firstName ? firstName : idUser.firstName;
     idUser.lastName = lastName ? lastName : idUser.lastName;
-    idUser.email = email ? firstName : idUser.email
+    idUser.email = email ? email : idUser.email
     // idUser.set( {firstName, lastName , email} ) // otra forma de hacerlo  con sequelize
     await idUser.save();
     return res.status(200).send({result: idUser , ok:true })
@@ -161,4 +179,5 @@ module.exports = {
   },
   getUserDetails,
   modifyUser,
+  detailUser
 };
