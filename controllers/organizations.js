@@ -32,6 +32,10 @@ const getPublic = async (req, res) => {
           route: "/staff",
         },
         {
+          text:"Actividades",
+          route: "/activities",
+        },
+        {
           text: "Novedades",
           route: "/news",
         },
