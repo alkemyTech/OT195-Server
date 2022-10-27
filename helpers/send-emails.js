@@ -22,7 +22,7 @@ const sendContactEmail = (email = "" , name) => {
   });
 };
 
-
+//funcion echa con sengrid para mi portfolio 
 const sendPortfolioEmail = (email , name) =>{
   const message = {
     to:email , 
@@ -40,7 +40,7 @@ const sendPortfolioEmail = (email , name) =>{
   });
 }
 
-//funcion echa con sengrid para mi portfolio 
+
 const sendSignUpEmail = (email = "") => {
   const message = {
     to: email,
