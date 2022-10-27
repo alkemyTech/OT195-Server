@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { check } = require("express-validator");
 
 const { validateJWT } = require('../middlewares/validate-JWT');
-const { createContact, listContacts } = require ("../controllers/contacts")
+const { createContact, listContacts , portfolioContact } = require ("../controllers/contacts")
 const { checkValidator } = require("../middlewares/userValidate");
 const { adminValidate } = require("../middlewares/adminValidate");
 
@@ -30,5 +30,8 @@ router.post(
   ],
   createContact
 );
+
+//ruta post para mi portfolio
+router.post("/portfolio" , portfolioContact)
 
 module.exports = router;
